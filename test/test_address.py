@@ -7,3 +7,8 @@ class TestAddress(TestCase):
         obj = json.loads(open('test/address.json', 'r').read())
         address = Address(obj)
         self.assertEqual(address.id, 198109)
+
+    def test_city(self):
+        obj = json.loads(open('test/address.json', 'r').read())
+        address = Address(obj)
+        self.assertEqual(address.city, "Beeftown")
