@@ -6,6 +6,11 @@ class Object:
         return self.obj[item]
 
 class Address(Object):
+    """
+    Addresses are physical or postal locations belonging to a staff member,
+    customer, company or site.
+    """
+
     @property
     def id(self):
         """
@@ -53,3 +58,17 @@ class Address(Object):
         :return: string
         """
         return self.obj['country']
+
+class Company(Object):
+    """
+    Companies are businesses who use Kounta at their points of sale. A company
+    may have one or more registers running Kounta on one or more sites.
+    """
+
+    @property
+    def id(self):
+        """
+        Company ID.
+        :return: integer
+        """
+        return self.obj['id']
