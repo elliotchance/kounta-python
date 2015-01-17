@@ -29,3 +29,11 @@ class Address(Object):
         :return: string[]
         """
         return self.obj['lines']
+
+    @property
+    def zone(self):
+        """
+        Zone/state.
+        :return: string
+        """
+        return self.obj['zone']

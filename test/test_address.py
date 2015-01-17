@@ -17,3 +17,6 @@ class TestAddress(TestCase):
         self.assertEqual(len(self.address.lines), 2)
         self.assertEqual(self.address.lines[0], "Suite 5, Level 12")
         self.assertEqual(self.address.lines[1], "44 Mutton Street")
+
+    def test_zone(self):
+        self.assertEqual(self.address.zone, "NSW")
