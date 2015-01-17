@@ -37,3 +37,11 @@ class Address(Object):
         :return: string
         """
         return self.obj['zone']
+
+    @property
+    def postal_code(self):
+        """
+        Postal code.
+        :return: string
+        """
+        return self.obj['postal_code']

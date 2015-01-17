@@ -20,3 +20,6 @@ class TestAddress(TestCase):
 
     def test_zone(self):
         self.assertEqual(self.address.zone, "NSW")
+
+    def test_postal_code(self):
+        self.assertEqual(self.address.postal_code, "2112")
