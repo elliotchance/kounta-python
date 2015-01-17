@@ -45,3 +45,11 @@ class Address(Object):
         :return: string
         """
         return self.obj['postal_code']
+
+    @property
+    def country(self):
+        """
+        Country.
+        :return: string
+        """
+        return self.obj['country']
