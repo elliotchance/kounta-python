@@ -10,7 +10,7 @@ class Address(Object):
     def id(self):
         """
         Address ID.
-        :rtype : integer
+        :return: integer
         """
         return self.obj['id']
 
@@ -21,3 +21,11 @@ class Address(Object):
         :return: string
         """
         return self.obj['city']
+
+    @property
+    def lines(self):
+        """
+        Address lines.
+        :return: string[]
+        """
+        return self.obj['lines']

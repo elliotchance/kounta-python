@@ -3,12 +3,17 @@ from kounta import Address
 import json
 
 class TestAddress(TestCase):
-    def test_id(self):
+    def setUp(self):
         obj = json.loads(open('test/address.json', 'r').read())
-        address = Address(obj)
-        self.assertEqual(address.id, 198109)
+        self.address = Address(obj)
+
+    def test_id(self):
+        self.assertEqual(self.address.id, 198109)
 
     def test_city(self):
-        obj = json.loads(open('test/address.json', 'r').read())
-        address = Address(obj)
-        self.assertEqual(address.city, "Beeftown")
+        self.assertEqual(self.address.city, "Beeftown")
+
+    def test_lines(self):
+        self.assertEqual(len(self.address.lines), 2)
+        self.assertEqual(self.address.lines[0], "Suite 5, Level 12")
+        self.assertEqual(self.address.lines[1], "44 Mutton Street")
