@@ -1,17 +1,25 @@
 from unittest import TestCase
 from kounta.objects import *
+from kounta.client import BasicClient
+from mock import MagicMock
 import json
 
-class TestBaseObject(TestCase):
+
+class BaseObjectTestCase(TestCase):
+    def setUp(self):
+        self.client = BasicClient('', '')
+
+class TestBaseObject(BaseObjectTestCase):
     def test_nonexistent_property(self):
         obj = json.loads('{"foo":"bar"}')
-        address = BaseObject(obj)
+        address = BaseObject(obj, self.client)
         self.assertEqual(address.foo, "bar")
 
-class TestAddress(TestCase):
+class TestAddress(BaseObjectTestCase):
     def setUp(self):
+        BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/address.json', 'r').read())
-        self.address = Address(obj)
+        self.address = Address(obj, self.client)
 
     def test_id(self):
         self.assertEqual(self.address.id, 198109)
@@ -33,10 +41,11 @@ class TestAddress(TestCase):
     def test_country(self):
         self.assertEqual(self.address.country, "AU")
 
-class TestCompany(TestCase):
+class TestCompany(BaseObjectTestCase):
     def setUp(self):
+        BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/company.json', 'r').read())
-        self.company = Company(obj)
+        self.company = Company(obj, self.client)
 
     def test_id(self):
         self.assertEqual(self.company.id, 5678)
@@ -82,11 +91,6 @@ class TestCompany(TestCase):
         self.assertEqual(timezone.offset, '+10:00')
         self.assertEqual(timezone.name, 'Australia/Melbourne')
 
-    def test_sites(self):
-        self.assertEqual(self.company.sites['count'], 3)
-        self.assertEqual(self.company.sites['updated_at'],
-                         parse('2013-05-24T16:24:13+10:00'))
-
     def test_registers(self):
         self.assertEqual(self.company.registers['count'], 12)
         self.assertEqual(self.company.registers['limit'], 15)
@@ -100,3 +104,10 @@ class TestCompany(TestCase):
     def test_updated_at(self):
         self.assertEqual(self.company.updated_at,
                          parse("2013-05-22T16:21:40+10:00"))
+
+    def test_sites_calls_api(self):
+        self.client.get_url = MagicMock(return_value='[]')
+        self.company.sites
+        url = '/v1/companies/5678/sites.json'
+        # noinspection PyUnresolvedReferences
+        self.client.get_url.assert_called_once_with(url)

@@ -21,8 +21,8 @@ class TestBasicClient(TestCase):
             client_id = config['client_id'],
             client_secret = config['client_secret']
         )
-        client._fetchURL = MagicMock(return_value='{}')
+        client._fetch_url = MagicMock(return_value='{}')
         client.company
         client.company
-        url = 'https://api.kounta.com/v1/companies/me.json'
-        client._fetchURL.assert_called_once_with(url)
+        url = '/v1/companies/me.json'
+        client._fetch_url.assert_called_once_with(url)

@@ -9,11 +9,13 @@ class BaseObject:
     `dict`s.
     """
 
-    def __init__(self, obj):
+    def __init__(self, obj, client):
         """
+        :type client: kounta.client.BasicClient
         :type obj: dict
         """
         self.obj = obj
+        self._client = client
 
     def __getattr__(self, item):
         return self.obj[item]
@@ -106,7 +108,9 @@ class Company(BaseObject):
         :return: Address
         """
         shipping_address = self.obj['shipping_address']
-        return Address(shipping_address) if shipping_address else None
+        if shipping_address:
+            return Address(shipping_address, self._client)
+        return None
 
     @property
     def postal_address(self):
@@ -115,7 +119,9 @@ class Company(BaseObject):
         :return: Address
         """
         postal_address = self.obj['postal_address']
-        return Address(postal_address) if postal_address else None
+        if postal_address:
+            return Address(postal_address, self._client)
+        return None
 
     @property
     def addresses(self):
@@ -141,7 +147,7 @@ class Company(BaseObject):
         Contact staff member.
         :return: Staff
         """
-        return Staff(self.obj['contact_staff_member'])
+        return Staff(self.obj['contact_staff_member'], self._client)
 
     @property
     def image(self):
@@ -173,17 +179,16 @@ class Company(BaseObject):
         Timezone information.
         :return: Timezone
         """
-        return Timezone(self.obj['timezone'])
+        return Timezone(self.obj['timezone'], self._client)
 
     @property
     def sites(self):
         """
-        Sites.
-        :return: object
+        Fetch all sites for this company.
+        :return: list
         """
-        sites = self.obj['sites']
-        sites['updated_at'] = parse(sites['updated_at'])
-        return sites
+        sites = self._client.get_url('/v1/companies/%d/sites.json' % self.id)
+        return [Site(site, self._client) for site in sites]
 
     @property
     def registers(self):
@@ -249,3 +254,6 @@ class Staff(BaseObject):
     @property
     def offset(self):
         return self.obj['offset']
+
+class Site(BaseObject):
+    pass

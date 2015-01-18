@@ -10,8 +10,11 @@ class BasicClient:
         self.client_id = client_id
         self.client_secret = client_secret
 
-    def _fetchURL(self, url):
+    def _fetch_url(self, url):
         """
+        This is an internal method, if you need to download an arbitrary
+        endpoint, see get_url()
+
         :rtype : dict
         :param url: string
         """
@@ -19,12 +22,16 @@ class BasicClient:
         headers = {
             "Authorization": "Basic " + encoded
         }
-        request = urllib2.Request(url, headers=headers)
+        request = urllib2.Request('https://api.kounta.com' + url,
+                                  headers=headers)
         return urllib2.urlopen(request).read()
+
+    def get_url(self, url):
+        return json.loads(self._fetch_url(url))
 
     @property
     def company(self):
         if self._company is None:
-            url = 'https://api.kounta.com/v1/companies/me.json'
-            self._company = Company(json.loads(self._fetchURL(url)))
+            url = '/v1/companies/me.json'
+            self._company = Company(self.get_url(url), self)
         return self._company
