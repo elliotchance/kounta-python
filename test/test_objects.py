@@ -9,11 +9,13 @@ class BaseObjectTestCase(TestCase):
     def setUp(self):
         self.client = BasicClient('', '')
 
+
 class TestBaseObject(BaseObjectTestCase):
     def test_nonexistent_property(self):
         obj = json.loads('{"foo":"bar"}')
         address = BaseObject(obj, self.client)
         self.assertEqual(address.foo, "bar")
+
 
 class TestAddress(BaseObjectTestCase):
     def setUp(self):
@@ -40,6 +42,7 @@ class TestAddress(BaseObjectTestCase):
 
     def test_country(self):
         self.assertEqual(self.address.country, "AU")
+
 
 class TestCompany(BaseObjectTestCase):
     def setUp(self):
@@ -114,3 +117,22 @@ class TestCompany(BaseObjectTestCase):
         url = '/v1/companies/5678/addresses.json'
         # noinspection PyUnresolvedReferences
         self.client.get_url.assert_called_once_with(url)
+
+
+class TestCategory(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/category.json', 'r').read())
+        self.category = Category(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.category.id, 8263)
+
+    def test_name(self):
+        self.assertEqual(self.category.name, "Fruit & Vegetables")
+
+    def test_description(self):
+        self.assertEqual(self.category.description, "Fresh fruit and veg from local and imported sources")
+
+    def test_image(self):
+        self.assertEqual(self.category.image, None)

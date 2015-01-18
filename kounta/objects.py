@@ -255,8 +255,40 @@ class Staff(BaseObject):
     def offset(self):
         return self.obj['offset']
 
+
 class Site(BaseObject):
     pass
 
+
 class Register(BaseObject):
     pass
+
+
+class Category(BaseObject):
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
+
+    @property
+    def name(self):
+        """
+        :return: int
+        """
+        return self.obj['name']
+
+    @property
+    def description(self):
+        """
+        :return: str
+        """
+        return self.obj['description']
+
+    @property
+    def image(self):
+        """
+        :return: str
+        """
+        return self.obj['image']
