@@ -1,6 +1,8 @@
 from dateutil.parser import parse
+import json
 
-class Object:
+
+class BaseObject:
     """
     Used as the parent for all objects returned from the API. It main purpose is
     to allow documentation to be built into the object instead of using plain
@@ -9,14 +11,18 @@ class Object:
 
     def __init__(self, obj):
         """
-        :type dict: object
+        :type obj: dict
         """
         self.obj = obj
 
     def __getattr__(self, item):
         return self.obj[item]
 
-class Address(Object):
+    def __str__(self):
+        return json.dumps(self.obj)
+
+
+class Address(BaseObject):
     """
     Addresses are physical or postal locations belonging to a staff member,
     customer, company or site.
@@ -70,7 +76,8 @@ class Address(Object):
         """
         return self.obj['country']
 
-class Company(Object):
+
+class Company(BaseObject):
     """
     Companies are businesses who use Kounta at their points of sale. A company
     may have one or more registers running Kounta on one or more sites.
@@ -204,7 +211,8 @@ class Company(Object):
         """
         return parse(self.obj['updated_at'])
 
-class Permission(Object):
+
+class Permission(BaseObject):
     @property
     def code(self):
         """
@@ -226,7 +234,8 @@ class Permission(Object):
         """
         return self.obj['domain']
 
-class Timezone(Object):
+
+class Timezone(BaseObject):
     @property
     def offset(self):
         return self.obj['offset']
@@ -235,7 +244,8 @@ class Timezone(Object):
     def name(self):
         return self.obj['name']
 
-class Staff(Object):
+
+class Staff(BaseObject):
     @property
     def offset(self):
         return self.obj['offset']

@@ -1,7 +1,37 @@
 from unittest import TestCase
-from kounta import Address, Company, Staff, Timezone
+from kounta.objects import *
 import json
-from dateutil.parser import parse
+
+class TestBaseObject(TestCase):
+    def test_nonexistent_property(self):
+        obj = json.loads('{"foo":"bar"}')
+        address = BaseObject(obj)
+        self.assertEqual(address.foo, "bar")
+
+class TestAddress(TestCase):
+    def setUp(self):
+        obj = json.loads(open('test/address.json', 'r').read())
+        self.address = Address(obj)
+
+    def test_id(self):
+        self.assertEqual(self.address.id, 198109)
+
+    def test_city(self):
+        self.assertEqual(self.address.city, "Beeftown")
+
+    def test_lines(self):
+        self.assertEqual(len(self.address.lines), 2)
+        self.assertEqual(self.address.lines[0], "Suite 5, Level 12")
+        self.assertEqual(self.address.lines[1], "44 Mutton Street")
+
+    def test_zone(self):
+        self.assertEqual(self.address.zone, "NSW")
+
+    def test_postal_code(self):
+        self.assertEqual(self.address.postal_code, "2112")
+
+    def test_country(self):
+        self.assertEqual(self.address.country, "AU")
 
 class TestCompany(TestCase):
     def setUp(self):
