@@ -136,3 +136,24 @@ class TestCategory(BaseObjectTestCase):
 
     def test_image(self):
         self.assertEqual(self.category.image, None)
+
+class TestProduct(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/product.json', 'r').read())
+        self.product = Product(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.product.id, 3928147)
+
+    def test_name(self):
+        self.assertEqual(self.product.name, "Egg Carton")
+
+    def test_description(self):
+        self.assertEqual(self.product.description, "12 \"Free Range\" Eggs in a carton.")
+
+    def test_code(self):
+        self.assertEqual(self.product.code, 'egg298')
+
+    def test_barcode(self):
+        self.assertEqual(self.product.barcode, '1234567890')

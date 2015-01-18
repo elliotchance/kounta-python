@@ -265,6 +265,10 @@ class Register(BaseObject):
 
 
 class Category(BaseObject):
+    """
+    Each product will belong to one or more categories.
+    """
+
     @property
     def id(self):
         """
@@ -292,3 +296,44 @@ class Category(BaseObject):
         :return: str
         """
         return self.obj['image']
+
+
+class Product(BaseObject):
+    """
+    Products are saleable items in your inventory, including modifier products.
+    """
+
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
+
+    @property
+    def name(self):
+        """
+        :return: int
+        """
+        return self.obj['name']
+
+    @property
+    def description(self):
+        """
+        :return: str
+        """
+        return self.obj['description']
+
+    @property
+    def code(self):
+        """
+        :return: str
+        """
+        return self.obj['code']
+
+    @property
+    def barcode(self):
+        """
+        :return: str
+        """
+        return self.obj['barcode']
