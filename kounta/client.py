@@ -4,6 +4,8 @@ import json
 from kounta.objects import Company
 
 class BasicClient:
+    _company = None
+
     def __init__(self, client_id, client_secret):
         self.client_id = client_id
         self.client_secret = client_secret
@@ -18,9 +20,11 @@ class BasicClient:
             "Authorization": "Basic " + encoded
         }
         request = urllib2.Request(url, headers=headers)
-        return json.loads(urllib2.urlopen(request).read())
+        return urllib2.urlopen(request).read()
 
     @property
     def company(self):
-        url = 'https://api.kounta.com/v1/companies/me.json'
-        return Company(self._fetchURL(url))
+        if self._company is None:
+            url = 'https://api.kounta.com/v1/companies/me.json'
+            self._company = Company(json.loads(self._fetchURL(url)))
+        return self._company
