@@ -18,9 +18,21 @@ class BaseObject:
         self._client = client
 
     def __getattr__(self, item):
+        """
+        Returns an attribute as it was originally set in the raw object.
+        :type item: str
+        """
         return self.obj[item]
 
     def __str__(self):
+        """
+        When converting any API object to a string the original JSON fetched
+        will be returned.
+
+        It is important to recognise that this JSON may not represent the actual
+        state of the object behind it because some calls may make further API
+        requests.
+        """
         return json.dumps(self.obj)
 
 
@@ -337,3 +349,30 @@ class Product(BaseObject):
         :return: str
         """
         return self.obj['barcode']
+
+
+class Checkin(BaseObject):
+    """
+    Authenticated customers can use checkin service.
+    """
+
+    @property
+    def customer_id(self):
+        """
+        :return: int
+        """
+        return self.obj['customer_id']
+
+    @property
+    def start_time(self):
+        """
+        :return: datetime
+        """
+        return parse(self.obj['start_time'])
+
+    @property
+    def duration(self):
+        """
+        :return: int
+        """
+        return self.obj['duration']

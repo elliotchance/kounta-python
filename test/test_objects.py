@@ -137,6 +137,7 @@ class TestCategory(BaseObjectTestCase):
     def test_image(self):
         self.assertEqual(self.category.image, None)
 
+
 class TestProduct(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
@@ -157,3 +158,19 @@ class TestProduct(BaseObjectTestCase):
 
     def test_barcode(self):
         self.assertEqual(self.product.barcode, '1234567890')
+
+
+class TestCheckin(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/checkin.json', 'r').read())
+        self.checkin = Checkin(obj, self.client)
+
+    def test_customer_id(self):
+        self.assertEqual(self.checkin.customer_id, 389427)
+
+    def test_start_time(self):
+        self.assertEqual(self.checkin.start_time, parse("2014-05-21T17:23:52+10:00"))
+
+    def test_duration(self):
+        self.assertEqual(self.checkin.duration, 120)
