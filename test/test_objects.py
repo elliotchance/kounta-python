@@ -61,11 +61,6 @@ class TestCompany(BaseObjectTestCase):
         self.assertTrue(isinstance(postal_address, Address))
         self.assertEqual(postal_address.id, 198109)
 
-    def test_addresses(self):
-        self.assertEqual(self.company.addresses['count'], 3)
-        self.assertEqual(self.company.addresses['updated_at'],
-                         parse('2013-05-22T16:21:40+10:00'))
-
     def test_business_number(self):
         self.assertEqual(self.company.business_number, "63 987 012 468")
 
@@ -110,5 +105,12 @@ class TestCompany(BaseObjectTestCase):
         self.client.get_url = MagicMock(return_value='[]')
         self.company.registers
         url = '/v1/companies/5678/registers.json'
+        # noinspection PyUnresolvedReferences
+        self.client.get_url.assert_called_once_with(url)
+
+    def test_addresses_calls_api(self):
+        self.client.get_url = MagicMock(return_value='[]')
+        self.company.addresses
+        url = '/v1/companies/5678/addresses.json'
         # noinspection PyUnresolvedReferences
         self.client.get_url.assert_called_once_with(url)

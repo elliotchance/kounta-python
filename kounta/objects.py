@@ -126,12 +126,12 @@ class Company(BaseObject):
     @property
     def addresses(self):
         """
-        Total addresses available.
-        :return: object
+        All addresses attached to this company.
+        :return: list
         """
-        addresses = self.obj['addresses']
-        addresses['updated_at'] = parse(addresses['updated_at'])
-        return addresses
+        url = '/v1/companies/%d/addresses.json' % self.id
+        addresses = self._client.get_url(url)
+        return [Address(address, self._client) for address in addresses]
 
     @property
     def business_number(self):

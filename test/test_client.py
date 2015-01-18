@@ -25,4 +25,5 @@ class TestBasicClient(TestCase):
         client.company
         client.company
         url = '/v1/companies/me.json'
+        # noinspection PyUnresolvedReferences
         client._fetch_url.assert_called_once_with(url)

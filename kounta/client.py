@@ -7,6 +7,10 @@ class BasicClient:
     _company = None
 
     def __init__(self, client_id, client_secret):
+        """
+        :type client_secret: str
+        :type client_id: str
+        """
         self.client_id = client_id
         self.client_secret = client_secret
 
@@ -16,7 +20,7 @@ class BasicClient:
         endpoint, see get_url()
 
         :rtype : dict
-        :param url: string
+        :param url: str
         """
         encoded = base64.b64encode(self.client_id + ':' + self.client_secret)
         headers = {
@@ -27,6 +31,9 @@ class BasicClient:
         return urllib2.urlopen(request).read()
 
     def get_url(self, url):
+        """
+        :type url: string
+        """
         return json.loads(self._fetch_url(url))
 
     @property

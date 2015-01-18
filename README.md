@@ -1,5 +1,5 @@
 Kounta
-------
+======
 
 Python client library for Kounta.com
 
@@ -10,5 +10,3 @@ kounta = BasicClient('client_id', 'client_secret')
 for site in kounta.company.sites:
     print site.name
 ```
-
-**Only basic authentication is currently supported.**
