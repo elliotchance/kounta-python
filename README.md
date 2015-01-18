@@ -3,11 +3,12 @@ Kounta
 
 Python client library for Kounta.com
 
-### Basic Authentication
-
 ```python
 from kounta.client import BasicClient
 
-client = BasicClient('client_id', 'client_secret')
-client.company
+kounta = BasicClient('client_id', 'client_secret')
+for site in kounta.company.sites:
+    print site.name
 ```
+
+**Only basic authentication is currently supported.**

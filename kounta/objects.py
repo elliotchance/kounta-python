@@ -193,12 +193,12 @@ class Company(BaseObject):
     @property
     def registers(self):
         """
-        Registers.
-        :return: object
+        Fetch all registers for this company.
+        :return: list
         """
-        registers = self.obj['registers']
-        registers['updated_at'] = parse(registers['updated_at'])
-        return registers
+        url = '/v1/companies/%d/registers.json' % self.id
+        registers = self._client.get_url(url)
+        return [Register(register, self._client) for register in registers]
 
     @property
     def created_at(self):
@@ -256,4 +256,7 @@ class Staff(BaseObject):
         return self.obj['offset']
 
 class Site(BaseObject):
+    pass
+
+class Register(BaseObject):
     pass

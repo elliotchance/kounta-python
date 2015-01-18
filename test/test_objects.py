@@ -91,12 +91,6 @@ class TestCompany(BaseObjectTestCase):
         self.assertEqual(timezone.offset, '+10:00')
         self.assertEqual(timezone.name, 'Australia/Melbourne')
 
-    def test_registers(self):
-        self.assertEqual(self.company.registers['count'], 12)
-        self.assertEqual(self.company.registers['limit'], 15)
-        self.assertEqual(self.company.registers['updated_at'],
-                         parse('2013-05-22T12:18:44+10:00'))
-
     def test_created_at(self):
         self.assertEqual(self.company.created_at,
                          parse("2013-05-08T13:56:02+10:00"))
@@ -109,5 +103,12 @@ class TestCompany(BaseObjectTestCase):
         self.client.get_url = MagicMock(return_value='[]')
         self.company.sites
         url = '/v1/companies/5678/sites.json'
+        # noinspection PyUnresolvedReferences
+        self.client.get_url.assert_called_once_with(url)
+
+    def test_registers_calls_api(self):
+        self.client.get_url = MagicMock(return_value='[]')
+        self.company.registers
+        url = '/v1/companies/5678/registers.json'
         # noinspection PyUnresolvedReferences
         self.client.get_url.assert_called_once_with(url)
