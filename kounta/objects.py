@@ -376,3 +376,50 @@ class Checkin(BaseObject):
         :return: int
         """
         return self.obj['duration']
+
+class Customer(BaseObject):
+    """
+    Customers are people who buy from the authenticated company.
+    """
+
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
+
+    @property
+    def first_name(self):
+        """
+        :return: str
+        """
+        return self.obj['first_name']
+
+    @property
+    def last_name(self):
+        """
+        :return: str
+        """
+        return self.obj['last_name']
+
+    @property
+    def primary_email_address(self):
+        """
+        :return: str
+        """
+        return self.obj['primary_email_address']
+
+    @property
+    def image(self):
+        """
+        :return: str
+        """
+        return self.obj['image']
+
+    @property
+    def reference_id(self):
+        """
+        :return: str
+        """
+        return self.obj['reference_id']

@@ -174,3 +174,29 @@ class TestCheckin(BaseObjectTestCase):
 
     def test_duration(self):
         self.assertEqual(self.checkin.duration, 120)
+
+
+class TestCustomer(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/customer.json', 'r').read())
+        self.customer = Checkin(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.customer.id, 389427)
+
+    def test_first_name(self):
+        self.assertEqual(self.customer.first_name, 'Jamie')
+
+    def test_last_name(self):
+        self.assertEqual(self.customer.last_name, 'McDonald')
+
+    def test_primary_email_address(self):
+        self.assertEqual(self.customer.primary_email_address, 'jamie@kounta.kom')
+
+    def test_image(self):
+        image = 'http://www.gravatar.com/avatar/c.jpg'
+        self.assertEqual(self.customer.image, image)
+
+    def test_reference_id(self):
+        self.assertEqual(self.customer.reference_id, '')

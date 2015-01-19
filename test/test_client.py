@@ -3,9 +3,13 @@ from kounta.client import BasicClient
 from kounta.objects import Company
 from mock import MagicMock
 import json
+import os
 
 class TestBasicClient(TestCase):
     def test_company(self):
+        if not os.environ.get('INTEGRATION'):
+            return
+
         config = json.load(open("config.json", 'r'))['basic']
         client = BasicClient(
             client_id = config['client_id'],
@@ -16,6 +20,9 @@ class TestBasicClient(TestCase):
         self.assertEqual(company.id, 5735)
 
     def test_company_is_cached(self):
+        if not os.environ.get('INTEGRATION'):
+            return
+
         config = json.load(open("config.json", 'r'))['basic']
         client = BasicClient(
             client_id = config['client_id'],
