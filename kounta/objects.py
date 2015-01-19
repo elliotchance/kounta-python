@@ -377,6 +377,7 @@ class Checkin(BaseObject):
         """
         return self.obj['duration']
 
+
 class Customer(BaseObject):
     """
     Customers are people who buy from the authenticated company.
@@ -423,3 +424,23 @@ class Customer(BaseObject):
         :return: str
         """
         return self.obj['reference_id']
+
+
+class Inventory(BaseObject):
+    """
+    Inventory indicates the quantity for a given product.
+    """
+
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
+
+    @property
+    def stock(self):
+        """
+        :return: int
+        """
+        return self.obj['stock']

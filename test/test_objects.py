@@ -200,3 +200,16 @@ class TestCustomer(BaseObjectTestCase):
 
     def test_reference_id(self):
         self.assertEqual(self.customer.reference_id, '')
+
+
+class TestInventory(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/inventory.json', 'r').read())
+        self.inventory = Inventory(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.inventory.id, 829)
+
+    def test_stock(self):
+        self.assertEqual(self.inventory.stock, 12)
