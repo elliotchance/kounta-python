@@ -51,10 +51,10 @@ class BasicClient:
 
 
 class URLCache:
-    cache = None
+    cache = {}
 
     def __getitem__(self, item):
-        return self.cache
+        return self.cache.get(item, None)
 
     def __setitem__(self, key, value):
-        self.cache = value
+        self.cache[key] = value

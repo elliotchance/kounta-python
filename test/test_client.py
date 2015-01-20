@@ -50,3 +50,8 @@ class TestURLCache(TestCase):
     def test_setting_an_item_can_be_retrieved(self):
         self.cache['foo'] = 'bar'
         self.assertEqual(self.cache['foo'], 'bar')
+
+    def test_setting_multiple_items_can_be_retrieved(self):
+        self.cache['foo'] = 'bar'
+        self.cache['bar'] = 'baz'
+        self.assertEqual(self.cache['foo'], 'bar')
