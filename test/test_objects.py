@@ -287,3 +287,19 @@ class TestPaymentMethod(BaseObjectTestCase):
 
     def test_ledger_code(self):
         self.assertEqual(self.payment_method.ledger_code, '200')
+
+
+class TestPayment(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/payment.json', 'r').read())
+        self.payment = Payment(obj, self.client)
+
+    def test_method_id(self):
+        self.assertEqual(self.payment.method_id, 12)
+
+    def test_amount(self):
+        self.assertEqual(self.payment.amount, 14.25)
+
+    def test_ref(self):
+        self.assertEqual(self.payment.ref, 'INV2-8M9F-B8UN-YQ5S-2G7K')

@@ -583,3 +583,31 @@ class PaymentMethod(BaseObject):
         :return: str
         """
         return self.obj['ledger_code']
+
+
+class Payment(BaseObject):
+    """
+    Payments (also called transactions) are financial transactions related to an
+    order.
+    """
+
+    @property
+    def method_id(self):
+        """
+        :return: int
+        """
+        return self.obj['method_id']
+
+    @property
+    def amount(self):
+        """
+        :return: float
+        """
+        return self.obj['amount']
+
+    @property
+    def ref(self):
+        """
+        :return: str
+        """
+        return self.obj['ref']
