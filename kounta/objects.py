@@ -611,3 +611,35 @@ class Payment(BaseObject):
         :return: str
         """
         return self.obj['ref']
+
+
+class PriceList(BaseObject):
+    """
+    Each site will be assigned a price list that determines ex tax unit prices
+    of each item on sale.
+
+    Price lists work by overriding prices in their parent lists (just like
+    subclassing in object-oriented programming). The base price list has a
+    parent_id of null.
+    """
+
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
+
+    @property
+    def name(self):
+        """
+        :return: str
+        """
+        return self.obj['name']
+
+    @property
+    def parent_id(self):
+        """
+        :return: int
+        """
+        return self.obj['parent_id']

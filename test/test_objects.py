@@ -303,3 +303,19 @@ class TestPayment(BaseObjectTestCase):
 
     def test_ref(self):
         self.assertEqual(self.payment.ref, 'INV2-8M9F-B8UN-YQ5S-2G7K')
+
+
+class TestPriceList(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/price_list.json', 'r').read())
+        self.price_list = PriceList(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.price_list.id, 201)
+
+    def test_name(self):
+        self.assertEqual(self.price_list.name, 'Base Prices')
+
+    def test_parent_id(self):
+        self.assertEqual(self.price_list.parent_id, None)
