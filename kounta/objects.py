@@ -268,9 +268,114 @@ class Timezone(BaseObject):
 
 
 class Staff(BaseObject):
+    """
+    Staff members are people who work for the authenticated company.
+    """
+
     @property
-    def offset(self):
-        return self.obj['offset']
+    def id(self):
+        """
+        :rtype: int
+        """
+        return self.obj['id']
+
+    @property
+    def first_name(self):
+        """
+        :rtype: str
+        """
+        return self.obj['first_name']
+
+    @property
+    def last_name(self):
+        """
+        :rtype: str
+        """
+        return self.obj['last_name']
+
+    @property
+    def is_admin(self):
+        """
+        :rtype: boolean
+        """
+        return self.obj['is_admin']
+
+    @property
+    def primary_email_address(self):
+        """
+        :rtype: str
+        """
+        return self.obj['primary_email_address']
+
+    @property
+    def email_addresses(self):
+        """
+        :rtype: str[]
+        """
+        return self.obj['email_addresses']
+
+    @property
+    def phone(self):
+        """
+        :rtype: str
+        """
+        return self.obj['phone']
+
+    @property
+    def mobile(self):
+        """
+        :rtype: str
+        """
+        return self.obj['mobile']
+
+    @property
+    def fax(self):
+        """
+        :rtype: str
+        """
+        return self.obj['fax']
+
+    @property
+    def shipping_address(self):
+        """
+        :return: Address
+        """
+        return self._make_address('shipping_address')
+
+    @property
+    def postal_address(self):
+        """
+        :return: Address
+        """
+        return self._make_address('postal_address')
+
+    @property
+    def permissions(self):
+        """
+        :return: Permission[]
+        """
+        return [Permission(p, self._client) for p in self.obj['permissions']]
+
+    @property
+    def image(self):
+        """
+        :rtype: str
+        """
+        return self.obj['image']
+
+    @property
+    def created_at(self):
+        """
+        :rtype: str
+        """
+        return parse(self.obj['created_at'])
+
+    @property
+    def updated_at(self):
+        """
+        :rtype: str
+        """
+        return parse(self.obj['updated_at'])
 
 
 class Site(BaseObject):

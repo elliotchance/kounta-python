@@ -467,3 +467,64 @@ class TestLocation(BaseObjectTestCase):
 
     def test_longitude(self):
         self.assertEqual(self.location.longitude, 14.927)
+
+
+class TestStaff(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/staff.json', 'r').read())
+        self.staff = Staff(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.staff.id, 389427)
+
+    def test_first_name(self):
+        self.assertEqual(self.staff.first_name, 'Jamie')
+
+    def test_last_name(self):
+        self.assertEqual(self.staff.last_name, 'McDonald')
+
+    def test_is_admin(self):
+        self.assertEqual(self.staff.is_admin, False)
+
+    def test_primary_email_address(self):
+        self.assertEqual(self.staff.primary_email_address, 'jamie@kounta.kom')
+
+    def test_email_addresses(self):
+        self.assertEqual(self.staff.email_addresses, [
+            "jamie@kounta.kom",
+            "jamie112783@hotmail.kom"
+        ])
+
+    def test_phone(self):
+        self.assertEqual(self.staff.phone, '+612 8765 4321')
+
+    def test_mobile(self):
+        self.assertEqual(self.staff.mobile, '0405 060 708')
+
+    def test_fax(self):
+        self.assertEqual(self.staff.fax, None)
+
+    def test_postal_address(self):
+        self.assertTrue(isinstance(self.staff.postal_address, Address))
+        self.assertEquals(self.staff.postal_address.id, 198109)
+
+    def test_shipping_address(self):
+        self.assertEquals(self.staff.shipping_address, None)
+
+    def test_permissions(self):
+        self.assertEquals(len(self.staff.permissions), 2)
+        self.assertTrue(isinstance(self.staff.permissions[0], Permission))
+        self.assertEquals(self.staff.permissions[0].code, 'FinishSale')
+
+    def test_image(self):
+        self.assertEqual(self.staff.image,
+                         'http://www.gravatar.com/avatar/c.jpg')
+
+    def test_created_at(self):
+        self.assertEqual(self.staff.created_at,
+                         parse('2013-05-08T13:56:02+10:00'))
+
+    def test_updated_at(self):
+        self.assertEqual(self.staff.updated_at,
+                         parse('2013-05-22T16:21:40+10:00'))
