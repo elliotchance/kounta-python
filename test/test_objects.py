@@ -241,3 +241,33 @@ class TestLine(BaseObjectTestCase):
 
     def test_modifiers(self):
         self.assertEqual(self.line.modifiers, [-67])
+
+
+class TestOrder(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/order.json', 'r').read())
+        self.order = Order(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.order.id, 912387093)
+
+    def test_status(self):
+        self.assertEqual(self.order.status, 'PENDING')
+
+    def test_total(self):
+        self.assertEqual(self.order.total, 45.65)
+
+    def test_total_tax(self):
+        self.assertEqual(self.order.total_tax, 4.15)
+
+    def test_paid(self):
+        self.assertEqual(self.order.paid, 0)
+
+    def test_created_at(self):
+        self.assertEqual(self.order.created_at,
+                         parse("2013-06-02T14:22:08+10:00"))
+
+    def test_updated_at(self):
+        self.assertEqual(self.order.updated_at,
+                         parse("2013-06-02T14:22:08+10:00"))

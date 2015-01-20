@@ -501,3 +501,58 @@ class Line(BaseObject):
         :return: list
         """
         return self.obj['modifiers']
+
+
+class Order(BaseObject):
+    """
+    Orders are also sometimes called sales or invoices.
+    """
+
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
+
+    @property
+    def status(self):
+        """
+        :return: str
+        """
+        return self.obj['status']
+
+    @property
+    def total(self):
+        """
+        :return: float
+        """
+        return self.obj['total']
+
+    @property
+    def total_tax(self):
+        """
+        :return: float
+        """
+        return self.obj['total_tax']
+
+    @property
+    def paid(self):
+        """
+        :return: float
+        """
+        return self.obj['paid']
+
+    @property
+    def created_at(self):
+        """
+        :return: datetime
+        """
+        return parse(self.obj['created_at'])
+
+    @property
+    def updated_at(self):
+        """
+        :return: datetime
+        """
+        return parse(self.obj['updated_at'])
