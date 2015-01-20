@@ -40,6 +40,13 @@ class TestBasicClient(TestCase):
 
 
 class TestURLCache(TestCase):
+    def setUp(self):
+        TestCase.setUp(self)
+        self.cache = URLCache()
+
     def test_fetching_a_cache_item_that_doesnt_exist_returns_none(self):
-        cache = URLCache()
-        self.assertEqual(cache['foo'], None)
+        self.assertEqual(self.cache['foo'], None)
+
+    def test_setting_an_item_can_be_retrieved(self):
+        self.cache['foo'] = 'bar'
+        self.assertEqual(self.cache['foo'], 'bar')
