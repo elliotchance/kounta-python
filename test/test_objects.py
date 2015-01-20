@@ -319,3 +319,22 @@ class TestPriceList(BaseObjectTestCase):
 
     def test_parent_id(self):
         self.assertEqual(self.price_list.parent_id, None)
+
+
+class TestRegister(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/register.json', 'r').read())
+        self.register = Register(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.register.id, 9091)
+
+    def test_code(self):
+        self.assertEqual(self.register.code, 'T1')
+
+    def test_name(self):
+        self.assertEqual(self.register.name, 'Terminal 1')
+
+    def test_site_id(self):
+        self.assertEqual(self.register.site_id, 985)

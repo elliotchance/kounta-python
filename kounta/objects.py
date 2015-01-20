@@ -643,3 +643,37 @@ class PriceList(BaseObject):
         :return: int
         """
         return self.obj['parent_id']
+
+
+class Register(BaseObject):
+    """
+    Registers are iPads or other computers running Kounta.
+    """
+
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
+
+    @property
+    def code(self):
+        """
+        :return: str
+        """
+        return self.obj['code']
+
+    @property
+    def name(self):
+        """
+        :return: str
+        """
+        return self.obj['name']
+
+    @property
+    def site_id(self):
+        """
+        :return: int
+        """
+        return self.obj['site_id']
