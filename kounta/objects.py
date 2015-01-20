@@ -705,3 +705,30 @@ class ShiftPeriod(BaseObject):
         :return: timedelta
         """
         return self.started_at - self.finished_at
+
+
+class Shift(ShiftPeriod):
+    """
+    Shifts record staff check-ins, check-outs and breaks.
+    """
+
+    @property
+    def staff_member(self):
+        """
+        :return: kounta.objects.Staff
+        """
+        return Staff(self.obj['staff_member'], self._client)
+
+    @property
+    def site(self):
+        """
+        :return: Site
+        """
+        return Site(self.obj['site'], self._client)
+
+    @property
+    def breaks(self):
+        """
+        :return: list
+        """
+        return [Shift(shift, self._client) for shift in self.obj['breaks']]

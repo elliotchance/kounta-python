@@ -356,4 +356,33 @@ class TestShiftPeriod(BaseObjectTestCase):
                          parse('2013-04-29T12:45:55+11:00'))
 
     def test_period(self):
-        self.assertEqual(self.shift_period.period, datetime.timedelta(-1, 85326))
+        self.assertEqual(self.shift_period.period,
+                         datetime.timedelta(-1, 85326))
+
+
+class TestShift(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/shift.json', 'r').read())
+        self.shift = Shift(obj, self.client)
+
+    def test_staff_member(self):
+        self.assertTrue(isinstance(self.shift.staff_member, Staff))
+        self.assertEqual(self.shift.staff_member.id, 9022)
+
+    def test_site(self):
+        self.assertTrue(isinstance(self.shift.site, Site))
+        self.assertEqual(self.shift.site.id, 208)
+
+    def test_started_at(self):
+        self.assertEqual(self.shift.started_at,
+                         parse("2013-04-29T09:03:18+11:00"))
+
+    def test_finished_at(self):
+        self.assertEqual(self.shift.finished_at,
+                         parse('2013-04-29T19:22:40+11:00'))
+
+    def test_breaks(self):
+        self.assertEqual(len(self.shift.breaks), 2)
+        self.assertEqual(self.shift.breaks[0].started_at,
+                         parse('2013-04-29T12:28:01+11:00'))
