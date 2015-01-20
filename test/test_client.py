@@ -37,3 +37,9 @@ class TestBasicClient(TestCase):
 
     def test_cache_is_initialised_with_object(self):
         self.assertTrue(isinstance(self.client._cache, URLCache))
+
+
+class TestURLCache(TestCase):
+    def test_fetching_a_cache_item_that_doesnt_exist_returns_none(self):
+        cache = URLCache()
+        self.assertEqual(cache['foo'], None)

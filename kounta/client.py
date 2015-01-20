@@ -51,4 +51,5 @@ class BasicClient:
 
 
 class URLCache:
-    pass
+    def __getitem__(self, item):
+        return None
