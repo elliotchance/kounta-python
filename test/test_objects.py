@@ -3,6 +3,7 @@ from kounta.objects import *
 from kounta.client import BasicClient
 from mock import MagicMock
 import json
+import datetime
 
 
 class BaseObjectTestCase(TestCase):
@@ -353,3 +354,6 @@ class TestShiftPeriod(BaseObjectTestCase):
     def test_finished_at(self):
         self.assertEqual(self.shift_period.finished_at,
                          parse('2013-04-29T12:45:55+11:00'))
+
+    def test_period(self):
+        self.assertEqual(self.shift_period.period, datetime.timedelta(-1, 85326))

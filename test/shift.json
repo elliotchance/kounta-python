@@ -1,0 +1,25 @@
+{
+  "staff_member": {
+    "id": 9022,
+    "first_name": "Jim",
+    "last_name": "Smith",
+    "email": "jim@kounta.kom"
+  },
+  "site": {
+    "id": 208,
+    "name": "Downtown",
+    "code": null
+  },
+  "started_at": "2013-04-29T09:03:18+11:00",
+  "finished_at": "2013-04-29T19:22:40+11:00",
+  "breaks": [
+    {
+      "started_at": "2013-04-29T12:28:01+11:00",
+      "finished_at": "2013-04-29T12:45:55+11:00"
+    },
+    {
+      "started_at": "2013-04-29T16:50:10+11:00",
+      "finished_at": "2013-04-29T17:02:29+11:00"
+    }
+  ]
+}

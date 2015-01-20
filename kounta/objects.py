@@ -697,3 +697,11 @@ class ShiftPeriod(BaseObject):
         :return: datetime
         """
         return parse(self.obj['finished_at'])
+
+    @property
+    def period(self):
+        """
+        The timedelta between the start anf finish time.
+        :return: timedelta
+        """
+        return self.started_at - self.finished_at
