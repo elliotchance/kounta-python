@@ -42,6 +42,14 @@ class TestBasicClient(TestCase):
         url = '/v1/companies/me.json'
         self.assertEqual(self.client._cache[url], {})
 
+    def test_reset_cache(self):
+        self.client._fetch_url = MagicMock(return_value='{"a":"b"}')
+        # noinspection PyStatementEffect
+        self.client.company
+        url = '/v1/companies/me.json'
+        self.client.reset_cache()
+        self.assertEqual(self.client._cache[url], None)
+
 
 class TestURLCache(TestCase):
     def setUp(self):
