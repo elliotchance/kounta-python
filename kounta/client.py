@@ -8,9 +8,6 @@ except ImportError:
     import urllib2
 
 class BasicClient:
-    _company = None
-    _cache = None
-
     def __init__(self, client_id, client_secret):
         """
         :type client_secret: str
@@ -39,15 +36,15 @@ class BasicClient:
     def get_url(self, url):
         """
         :type url: string
+        :rtype: dict
         """
-        return json.loads(self._fetch_url(url))
+        if self._cache[url] is None:
+            self._cache[url] = json.loads(self._fetch_url(url))
+        return self._cache[url]
 
     @property
     def company(self):
-        if self._company is None:
-            url = '/v1/companies/me.json'
-            self._company = Company(self.get_url(url), self)
-        return self._company
+        return Company(self.get_url('/v1/companies/me.json'), self)
 
 
 class URLCache:

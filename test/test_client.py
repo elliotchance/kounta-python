@@ -23,9 +23,6 @@ class TestBasicClient(TestCase):
         self.assertEqual(company.id, 5735)
 
     def test_company_is_cached(self):
-        if not os.environ.get('INTEGRATION'):
-            return
-
         self.client._fetch_url = MagicMock(return_value='{}')
         # noinspection PyStatementEffect
         self.client.company
@@ -33,10 +30,17 @@ class TestBasicClient(TestCase):
         self.client.company
         url = '/v1/companies/me.json'
         # noinspection PyUnresolvedReferences
-        client._fetch_url.assert_called_once_with(url)
+        self.client._fetch_url.assert_called_once_with(url)
 
     def test_cache_is_initialised_with_object(self):
         self.assertTrue(isinstance(self.client._cache, URLCache))
+
+    def test_company_uses_urlcache(self):
+        self.client._fetch_url = MagicMock(return_value='{}')
+        # noinspection PyStatementEffect
+        self.client.company
+        url = '/v1/companies/me.json'
+        self.assertEqual(self.client._cache[url], {})
 
 
 class TestURLCache(TestCase):
