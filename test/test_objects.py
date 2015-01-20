@@ -213,3 +213,31 @@ class TestInventory(BaseObjectTestCase):
 
     def test_stock(self):
         self.assertEqual(self.inventory.stock, 12)
+
+
+class TestLine(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/line.json', 'r').read())
+        self.line = Line(obj, self.client)
+
+    def test_number(self):
+        self.assertEqual(self.line.number, 1)
+
+    def test_product_id(self):
+        self.assertEqual(self.line.product_id, 8710)
+
+    def test_quantity(self):
+        self.assertEqual(self.line.quantity, 1)
+
+    def test_notes(self):
+        self.assertEqual(self.line.notes, '15% surcharge for public holiday')
+
+    def test_unit_price(self):
+        self.assertEqual(self.line.unit_price, 1.3636)
+
+    def test_price_variation(self):
+        self.assertEqual(self.line.price_variation, 1.15)
+
+    def test_modifiers(self):
+        self.assertEqual(self.line.modifiers, [-67])

@@ -444,3 +444,60 @@ class Inventory(BaseObject):
         :return: int
         """
         return self.obj['stock']
+
+
+class Line(BaseObject):
+    """
+    Lines (also called order lines, sale lines or line items) describe the
+    products included in an order.
+    """
+
+    @property
+    def number(self):
+        """
+        The line number. This will start with `1`.
+        :return: int
+        """
+        return self.obj['number']
+
+    @property
+    def product_id(self):
+        """
+        :return: int
+        """
+        return self.obj['product_id']
+
+    @property
+    def quantity(self):
+        """
+        :return: int
+        """
+        return self.obj['quantity']
+
+    @property
+    def notes(self):
+        """
+        :return: str
+        """
+        return self.obj['notes']
+
+    @property
+    def unit_price(self):
+        """
+        :return: float
+        """
+        return self.obj['unit_price']
+
+    @property
+    def price_variation(self):
+        """
+        :return: float
+        """
+        return self.obj['price_variation']
+
+    @property
+    def modifiers(self):
+        """
+        :return: list
+        """
+        return self.obj['modifiers']
