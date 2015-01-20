@@ -9,6 +9,7 @@ except ImportError:
 
 class BasicClient:
     _company = None
+    _cache = None
 
     def __init__(self, client_id, client_secret):
         """
@@ -17,6 +18,7 @@ class BasicClient:
         """
         self.client_id = client_id
         self.client_secret = client_secret
+        self._cache = URLCache()
 
     def _fetch_url(self, url):
         """
@@ -46,3 +48,7 @@ class BasicClient:
             url = '/v1/companies/me.json'
             self._company = Company(self.get_url(url), self)
         return self._company
+
+
+class URLCache:
+    pass

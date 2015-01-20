@@ -1,21 +1,24 @@
 from unittest import TestCase
-from kounta.client import BasicClient
+from kounta.client import BasicClient, URLCache
 from kounta.objects import Company
 from mock import MagicMock
 import json
 import os
 
 class TestBasicClient(TestCase):
+    def setUp(self):
+        TestCase.setUp(self)
+        config = json.load(open("config.json", 'r'))['basic']
+        self.client = BasicClient(
+            client_id = config['client_id'],
+            client_secret = config['client_secret']
+        )
+
     def test_company(self):
         if not os.environ.get('INTEGRATION'):
             return
 
-        config = json.load(open("config.json", 'r'))['basic']
-        client = BasicClient(
-            client_id = config['client_id'],
-            client_secret = config['client_secret']
-        )
-        company = client.company
+        company = self.client.company
         self.assertTrue(isinstance(company, Company))
         self.assertEqual(company.id, 5735)
 
@@ -23,14 +26,14 @@ class TestBasicClient(TestCase):
         if not os.environ.get('INTEGRATION'):
             return
 
-        config = json.load(open("config.json", 'r'))['basic']
-        client = BasicClient(
-            client_id = config['client_id'],
-            client_secret = config['client_secret']
-        )
-        client._fetch_url = MagicMock(return_value='{}')
-        client.company
-        client.company
+        self.client._fetch_url = MagicMock(return_value='{}')
+        # noinspection PyStatementEffect
+        self.client.company
+        # noinspection PyStatementEffect
+        self.client.company
         url = '/v1/companies/me.json'
         # noinspection PyUnresolvedReferences
         client._fetch_url.assert_called_once_with(url)
+
+    def test_cache_is_initialised_with_object(self):
+        self.assertTrue(isinstance(self.client._cache, URLCache))
