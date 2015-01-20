@@ -361,7 +361,7 @@ class Site(BaseObject):
         """
         :return: Location
         """
-        return Location(self.obj['location'])
+        return Location(self.obj['location'], self._client)
 
     @property
     def image(self):
@@ -380,9 +380,16 @@ class Site(BaseObject):
     @property
     def register_level_reconciliation(self):
         """
-        :return: bool
+        :return: boolean
         """
         return self.obj['register_level_reconciliation']
+
+    @property
+    def price_list(self):
+        """
+        :return: PriceList
+        """
+        return PriceList(self.obj['price_list'], self._client)
 
     @property
     def created_at(self):

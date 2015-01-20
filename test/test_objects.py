@@ -403,8 +403,19 @@ class TestSite(BaseObjectTestCase):
     def test_code(self):
         self.assertEqual(self.site.code, 'AU-HO')
 
+    def test_contact_person(self):
+        self.assertTrue(isinstance(self.site.contact_person, Staff))
+        self.assertEquals(self.site.contact_person.id, 92402)
+
     def test_business_number(self):
         self.assertEqual(self.site.business_number, '12 345 678 910')
+
+    def test_shipping_address(self):
+        self.assertTrue(isinstance(self.site.shipping_address, Address))
+        self.assertEquals(self.site.shipping_address.id, 198109)
+
+    def test_postal_address(self):
+        self.assertEquals(self.site.postal_address, None)
 
     def test_email(self):
         self.assertEqual(self.site.email, 'au@kounta.com')
@@ -418,6 +429,10 @@ class TestSite(BaseObjectTestCase):
     def test_fax(self):
         self.assertEqual(self.site.fax, '')
 
+    def test_location(self):
+        self.assertTrue(isinstance(self.site.location, Location))
+        self.assertEquals(self.site.location.latitude, 23.7861)
+
     def test_image(self):
         self.assertEqual(self.site.image,
                          'http://www.gravatar.com/avatar/c.jpg')
@@ -427,6 +442,10 @@ class TestSite(BaseObjectTestCase):
 
     def test_register_level_reconciliation(self):
         self.assertEqual(self.site.register_level_reconciliation, True)
+
+    def test_price_list(self):
+        self.assertTrue(isinstance(self.site.price_list, PriceList))
+        self.assertEquals(self.site.price_list.id, 3278)
 
     def test_created_at(self):
         self.assertEqual(self.site.created_at,
