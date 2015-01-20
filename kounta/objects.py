@@ -556,3 +556,30 @@ class Order(BaseObject):
         :return: datetime
         """
         return parse(self.obj['updated_at'])
+
+
+class PaymentMethod(BaseObject):
+    """
+    Payment methods are assigned to order payments.
+    """
+
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
+
+    @property
+    def name(self):
+        """
+        :return: str
+        """
+        return self.obj['name']
+
+    @property
+    def ledger_code(self):
+        """
+        :return: str
+        """
+        return self.obj['ledger_code']

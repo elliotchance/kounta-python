@@ -271,3 +271,19 @@ class TestOrder(BaseObjectTestCase):
     def test_updated_at(self):
         self.assertEqual(self.order.updated_at,
                          parse("2013-06-02T14:22:08+10:00"))
+
+
+class TestPaymentMethod(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/payment_method.json', 'r').read())
+        self.payment_method = PaymentMethod(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.payment_method.id, 1)
+
+    def test_name(self):
+        self.assertEqual(self.payment_method.name, 'Cash')
+
+    def test_ledger_code(self):
+        self.assertEqual(self.payment_method.ledger_code, '200')
