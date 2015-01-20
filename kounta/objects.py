@@ -677,3 +677,23 @@ class Register(BaseObject):
         :return: int
         """
         return self.obj['site_id']
+
+
+class ShiftPeriod(BaseObject):
+    """
+    Represents a block of time when dealing with `Shift`s.
+    """
+
+    @property
+    def started_at(self):
+        """
+        :return: datetime
+        """
+        return parse(self.obj['started_at'])
+
+    @property
+    def finished_at(self):
+        """
+        :return: datetime
+        """
+        return parse(self.obj['finished_at'])

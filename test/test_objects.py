@@ -338,3 +338,18 @@ class TestRegister(BaseObjectTestCase):
 
     def test_site_id(self):
         self.assertEqual(self.register.site_id, 985)
+
+
+class TestShiftPeriod(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/shift_period.json', 'r').read())
+        self.shift_period = ShiftPeriod(obj, self.client)
+
+    def test_started_at(self):
+        self.assertEqual(self.shift_period.started_at,
+                         parse("2013-04-29T12:28:01+11:00"))
+
+    def test_finished_at(self):
+        self.assertEqual(self.shift_period.finished_at,
+                         parse('2013-04-29T12:45:55+11:00'))
