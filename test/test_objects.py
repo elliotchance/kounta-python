@@ -528,3 +528,22 @@ class TestStaff(BaseObjectTestCase):
     def test_updated_at(self):
         self.assertEqual(self.staff.updated_at,
                          parse('2013-05-22T16:21:40+10:00'))
+
+
+class TestTax(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/tax.json', 'r').read())
+        self.tax = Tax(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.tax.id, 829)
+
+    def test_code(self):
+        self.assertEqual(self.tax.code, 'GST')
+
+    def test_name(self):
+        self.assertEqual(self.tax.name, "Goods & Services Tax")
+
+    def test_rate(self):
+        self.assertEqual(self.tax.rate, 0.1)

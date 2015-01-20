@@ -987,3 +987,38 @@ class Location(BaseObject):
         :return: float
         """
         return self.obj['longitude']
+
+
+class Tax(BaseObject):
+    """
+    Each product can be assigned one or more tax, defined as a code, name, and
+    rate.
+    """
+
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
+
+    @property
+    def code(self):
+        """
+        :return: str
+        """
+        return self.obj['code']
+
+    @property
+    def name(self):
+        """
+        :return: str
+        """
+        return self.obj['name']
+
+    @property
+    def rate(self):
+        """
+        :return: float
+        """
+        return self.obj['rate']
