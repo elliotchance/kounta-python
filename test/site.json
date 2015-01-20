@@ -1,0 +1,45 @@
+{
+  "id": 923,
+  "name": "Head Office",
+  "code": "AU-HO",
+  "contact_person": {
+    "id": 92402,
+    "first_name": "Ricky",
+    "last_name": "McDonald",
+    "email": "rocky@rara.kom"
+  },
+  "business_number": "12 345 678 910",
+  "shipping_address": {
+    "id": 198109,
+    "lines": [
+      "Suite 5, Level 12",
+      "44 Mutton Street"
+    ],
+    "city": "Beeftown",
+    "zone": "VIC",
+    "postal_code": "6112",
+    "country": "AU"
+  },
+  "postal_address": null,
+  "email": "au@kounta.com",
+  "mobile": "412 555 0189",
+  "phone": "",
+  "fax": "",
+  "location": {
+    "latitude": 23.7861,
+    "longitude": 14.927
+  },
+  "image": "http://www.gravatar.com/avatar/c.jpg",
+  "website": "http://kounta.com",
+  "register_level_reconciliation": true,
+  "price_list": {
+    "id": 3278,
+    "name": "Standard"
+  },
+  "products": {
+    "count": 124,
+    "updated_at": "2013-05-31T09:41:21+10:00"
+  },
+  "created_at": "2013-05-08T13:56:02+10:00",
+  "updated_at": "2013-05-22T16:21:40+10:00"
+}

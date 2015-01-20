@@ -35,6 +35,17 @@ class BaseObject:
         """
         return json.dumps(self.obj)
 
+    def _make_address(self, field):
+        """
+        Test if a `field` is not None and return an Address object. Otherwise
+        return None
+        :type field: str
+        """
+        address = self.obj[field]
+        if address:
+            return Address(address, self._client)
+        return None
+
 
 class Address(BaseObject):
     """
@@ -119,10 +130,7 @@ class Company(BaseObject):
         Shipping address.
         :return: Address
         """
-        shipping_address = self.obj['shipping_address']
-        if shipping_address:
-            return Address(shipping_address, self._client)
-        return None
+        return self._make_address('shipping_address')
 
     @property
     def postal_address(self):
@@ -130,10 +138,7 @@ class Company(BaseObject):
         Postal address.
         :return: Address
         """
-        postal_address = self.obj['postal_address']
-        if postal_address:
-            return Address(postal_address, self._client)
-        return None
+        return self._make_address('postal_address')
 
     @property
     def addresses(self):
@@ -269,11 +274,129 @@ class Staff(BaseObject):
 
 
 class Site(BaseObject):
-    pass
+    """
+    Sites are physical locations, such as outlets, offices etc, at which one or
+    more Kountas will be used.
+    """
 
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
 
-class Register(BaseObject):
-    pass
+    @property
+    def name(self):
+        """
+        :return: str
+        """
+        return self.obj['name']
+
+    @property
+    def code(self):
+        """
+        :return: str
+        """
+        return self.obj['code']
+
+    @property
+    def contact_person(self):
+        """
+        :return: Staff
+        """
+        return Staff(self.obj['contact_person'], self._client)
+
+    @property
+    def business_number(self):
+        """
+        :return: str
+        """
+        return self.obj['business_number']
+
+    @property
+    def shipping_address(self):
+        """
+        :return: Address
+        """
+        return self._make_address('shipping_address')
+
+    @property
+    def postal_address(self):
+        """
+        :return: Address
+        """
+        return self._make_address('postal_address')
+
+    @property
+    def email(self):
+        """
+        :return: str
+        """
+        return self.obj['email']
+
+    @property
+    def mobile(self):
+        """
+        :return: str
+        """
+        return self.obj['mobile']
+
+    @property
+    def phone(self):
+        """
+        :return: str
+        """
+        return self.obj['phone']
+
+    @property
+    def fax(self):
+        """
+        :return: str
+        """
+        return self.obj['fax']
+
+    @property
+    def location(self):
+        """
+        :return: Location
+        """
+        return Location(self.obj['location'])
+
+    @property
+    def image(self):
+        """
+        :return: str
+        """
+        return self.obj['image']
+
+    @property
+    def website(self):
+        """
+        :return: str
+        """
+        return self.obj['website']
+
+    @property
+    def register_level_reconciliation(self):
+        """
+        :return: bool
+        """
+        return self.obj['register_level_reconciliation']
+
+    @property
+    def created_at(self):
+        """
+        :return: datetime
+        """
+        return parse(self.obj['created_at'])
+
+    @property
+    def updated_at(self):
+        """
+        :return: datetime
+        """
+        return parse(self.obj['updated_at'])
 
 
 class Category(BaseObject):
@@ -732,3 +855,23 @@ class Shift(ShiftPeriod):
         :return: list
         """
         return [Shift(shift, self._client) for shift in self.obj['breaks']]
+
+
+class Location(BaseObject):
+    """
+    A geographical location with a latitude and longitude.
+    """
+
+    @property
+    def latitude(self):
+        """
+        :return: float
+        """
+        return self.obj['latitude']
+
+    @property
+    def longitude(self):
+        """
+        :return: float
+        """
+        return self.obj['longitude']

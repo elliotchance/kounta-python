@@ -386,3 +386,65 @@ class TestShift(BaseObjectTestCase):
         self.assertEqual(len(self.shift.breaks), 2)
         self.assertEqual(self.shift.breaks[0].started_at,
                          parse('2013-04-29T12:28:01+11:00'))
+
+
+class TestSite(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/site.json', 'r').read())
+        self.site = Site(obj, self.client)
+
+    def test_id(self):
+        self.assertEqual(self.site.id, 923)
+
+    def test_name(self):
+        self.assertEqual(self.site.name, 'Head Office')
+
+    def test_code(self):
+        self.assertEqual(self.site.code, 'AU-HO')
+
+    def test_business_number(self):
+        self.assertEqual(self.site.business_number, '12 345 678 910')
+
+    def test_email(self):
+        self.assertEqual(self.site.email, 'au@kounta.com')
+
+    def test_mobile(self):
+        self.assertEqual(self.site.mobile, '412 555 0189')
+
+    def test_phone(self):
+        self.assertEqual(self.site.phone, '')
+
+    def test_fax(self):
+        self.assertEqual(self.site.fax, '')
+
+    def test_image(self):
+        self.assertEqual(self.site.image,
+                         'http://www.gravatar.com/avatar/c.jpg')
+
+    def test_website(self):
+        self.assertEqual(self.site.website, 'http://kounta.com')
+
+    def test_register_level_reconciliation(self):
+        self.assertEqual(self.site.register_level_reconciliation, True)
+
+    def test_created_at(self):
+        self.assertEqual(self.site.created_at,
+                         parse('2013-05-08T13:56:02+10:00'))
+
+    def test_updated_at(self):
+        self.assertEqual(self.site.updated_at,
+                         parse('2013-05-22T16:21:40+10:00'))
+
+
+class TestLocation(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/location.json', 'r').read())
+        self.location = Location(obj, self.client)
+
+    def test_latitude(self):
+        self.assertEqual(self.location.latitude, 23.7861)
+
+    def test_longitude(self):
+        self.assertEqual(self.location.longitude, 14.927)
