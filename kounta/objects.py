@@ -258,12 +258,21 @@ class Permission(BaseObject):
 
 
 class Timezone(BaseObject):
+    """
+    A timezone represents a time offset at a geographical location.
+    """
     @property
     def offset(self):
+        """
+        :rtype : string
+        """
         return self.obj['offset']
 
     @property
     def name(self):
+        """
+        :rtype : string
+        """
         return self.obj['name']
 
 
