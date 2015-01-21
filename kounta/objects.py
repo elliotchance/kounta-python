@@ -57,7 +57,7 @@ class Address(BaseObject):
     def id(self):
         """
         Address ID.
-        :return: integer
+        :return: int
         """
         return self.obj['id']
 
@@ -65,7 +65,7 @@ class Address(BaseObject):
     def city(self):
         """
         City/suburb.
-        :return: string
+        :return: str
         """
         return self.obj['city']
 
@@ -73,7 +73,7 @@ class Address(BaseObject):
     def lines(self):
         """
         Address lines.
-        :return: string[]
+        :return: str[]
         """
         return self.obj['lines']
 
@@ -81,7 +81,7 @@ class Address(BaseObject):
     def zone(self):
         """
         Zone/state.
-        :return: string
+        :return: str
         """
         return self.obj['zone']
 
@@ -89,7 +89,7 @@ class Address(BaseObject):
     def postal_code(self):
         """
         Postal code.
-        :return: string
+        :return: str
         """
         return self.obj['postal_code']
 
@@ -97,7 +97,7 @@ class Address(BaseObject):
     def country(self):
         """
         Country.
-        :return: string
+        :return: str
         """
         return self.obj['country']
 
@@ -112,7 +112,7 @@ class Company(BaseObject):
     def id(self):
         """
         Company ID.
-        :return: integer
+        :return: int
         """
         return self.obj['id']
 
@@ -120,7 +120,7 @@ class Company(BaseObject):
     def name(self):
         """
         Company name.
-        :return: string
+        :return: str
         """
         return self.obj['name']
 
@@ -144,7 +144,7 @@ class Company(BaseObject):
     def addresses(self):
         """
         All addresses attached to this company.
-        :return: list
+        :return: Address[]
         """
         url = '/v1/companies/%d/addresses.json' % self.id
         addresses = self._client.get_url(url)
@@ -154,7 +154,7 @@ class Company(BaseObject):
     def business_number(self):
         """
         ABN, ACN or whatever is applicable as the business number.
-        :return: string
+        :return: str
         """
         return self.obj['business_number']
 
@@ -170,7 +170,7 @@ class Company(BaseObject):
     def image(self):
         """
         Avatar image.
-        :return: string
+        :return: str
         """
         return self.obj['image']
 
@@ -178,7 +178,7 @@ class Company(BaseObject):
     def website(self):
         """
         Website.
-        :return: string
+        :return: str
         """
         return self.obj['website']
 
@@ -186,7 +186,7 @@ class Company(BaseObject):
     def currency(self):
         """
         Currency code.
-        :return: string
+        :return: str
         """
         return self.obj['currency']
 
@@ -202,7 +202,7 @@ class Company(BaseObject):
     def sites(self):
         """
         Fetch all sites for this company.
-        :return: list
+        :return: Site[]
         """
         sites = self._client.get_url('/v1/companies/%d/sites.json' % self.id)
         return [Site(site, self._client) for site in sites]
@@ -211,7 +211,7 @@ class Company(BaseObject):
     def registers(self):
         """
         Fetch all registers for this company.
-        :return: list
+        :return: Register[]
         """
         url = '/v1/companies/%d/registers.json' % self.id
         registers = self._client.get_url(url)
@@ -238,21 +238,21 @@ class Permission(BaseObject):
     @property
     def code(self):
         """
-        :rtype : string
+        :rtype : str
         """
         return self.obj['code']
 
     @property
     def name(self):
         """
-        :rtype : string
+        :rtype : str
         """
         return self.obj['name']
 
     @property
     def domain(self):
         """
-        :rtype : string
+        :rtype : str
         """
         return self.obj['domain']
 
@@ -261,17 +261,18 @@ class Timezone(BaseObject):
     """
     A timezone represents a time offset at a geographical location.
     """
+
     @property
     def offset(self):
         """
-        :rtype : string
+        :rtype : str
         """
         return self.obj['offset']
 
     @property
     def name(self):
         """
-        :rtype : string
+        :rtype : str
         """
         return self.obj['name']
 
@@ -742,7 +743,7 @@ class Line(BaseObject):
     @property
     def modifiers(self):
         """
-        :return: list
+        :return: int[]
         """
         return self.obj['modifiers']
 
@@ -959,7 +960,7 @@ class Shift(ShiftPeriod):
     @property
     def staff_member(self):
         """
-        :return: kounta.objects.Staff
+        :return: Staff
         """
         return Staff(self.obj['staff_member'], self._client)
 
@@ -973,7 +974,7 @@ class Shift(ShiftPeriod):
     @property
     def breaks(self):
         """
-        :return: list
+        :return: Shift[]
         """
         return [Shift(shift, self._client) for shift in self.obj['breaks']]
 

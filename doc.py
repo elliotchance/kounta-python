@@ -28,6 +28,28 @@ def get_description(doc):
 
     return ' '.join(r).strip()
 
+def nice_return_type(property):
+    return_type = get_return_type(property.__doc__)
+    return_type = return_type.replace('[', '\[').replace(']', '\]')
+    if return_type.lower() != return_type:
+        return_type = '[%s](#%s)' % (return_type, return_type.lower().strip('\\[]'))
+    return return_type
+
+def render_properties(obj):
+    p = []
+    for property_name, property in vars(obj).iteritems():
+        if property_name[0] == '_':
+            continue
+        desc = get_description(property.__doc__)
+        p.append(' * `%s` - %s%s%s' % (
+            property_name,
+            nice_return_type(property),
+            ': ' if desc else '',
+            desc,
+        ))
+
+    return p
+
 for name, obj in inspect.getmembers(kounta.objects):
     if inspect.isclass(obj):
         name = str(obj)
@@ -37,14 +59,5 @@ for name, obj in inspect.getmembers(kounta.objects):
         if obj.__doc__ is not None:
             print '\n'.join(map(str.strip, obj.__doc__.split('\n')))
 
-        for property_name, property in vars(obj).iteritems():
-            if property_name[0] == '_':
-                continue
-            desc = get_description(property.__doc__)
-            print ' * `%s` (%s)%s%s' % (
-                property_name,
-                get_return_type(property.__doc__).replace('[', '\[').replace(']', '\]'),
-                ': ' if desc else '',
-                desc,
-            )
+        print "\n".join(sorted(render_properties(obj)))
         print

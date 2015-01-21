@@ -100,6 +100,7 @@ class TestCompany(BaseObjectTestCase):
 
     def test_sites_calls_api(self):
         self.client.get_url = MagicMock(return_value='[]')
+        # noinspection PyStatementEffect
         self.company.sites
         url = '/v1/companies/5678/sites.json'
         # noinspection PyUnresolvedReferences
@@ -107,6 +108,7 @@ class TestCompany(BaseObjectTestCase):
 
     def test_registers_calls_api(self):
         self.client.get_url = MagicMock(return_value='[]')
+        # noinspection PyStatementEffect
         self.company.registers
         url = '/v1/companies/5678/registers.json'
         # noinspection PyUnresolvedReferences
@@ -114,6 +116,7 @@ class TestCompany(BaseObjectTestCase):
 
     def test_addresses_calls_api(self):
         self.client.get_url = MagicMock(return_value='[]')
+        # noinspection PyStatementEffect
         self.company.addresses
         url = '/v1/companies/5678/addresses.json'
         # noinspection PyUnresolvedReferences

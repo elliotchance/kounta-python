@@ -19,122 +19,122 @@ Objects
 Addresses are physical or postal locations belonging to a staff member,
 customer, company or site.
 
- * `city` (string): City/suburb.
- * `zone` (string): Zone/state.
- * `country` (string): Country.
- * `lines` (string\[\]): Address lines.
- * `id` (integer): Address ID.
- * `postal_code` (string): Postal code.
+ * `city` - str: City/suburb.
+ * `country` - str: Country.
+ * `id` - int: Address ID.
+ * `lines` - str\[\]: Address lines.
+ * `postal_code` - str: Postal code.
+ * `zone` - str: Zone/state.
 
 ### Category
 
 Each product will belong to one or more categories.
 
- * `description` (str)
- * `image` (str)
- * `id` (int)
- * `name` (int)
+ * `description` - str
+ * `id` - int
+ * `image` - str
+ * `name` - int
 
 ### Checkin
 
 Authenticated customers can use checkin service.
 
- * `duration` (int)
- * `customer_id` (int)
- * `start_time` (datetime)
+ * `customer_id` - int
+ * `duration` - int
+ * `start_time` - datetime
 
 ### Company
 
 Companies are businesses who use Kounta at their points of sale. A company
 may have one or more registers running Kounta on one or more sites.
 
- * `website` (string): Website.
- * `created_at` (datetime): When the company was created.
- * `name` (string): Company name.
- * `postal_address` (Address): Postal address.
- * `updated_at` (datetime): When the company was last modified.
- * `image` (string): Avatar image.
- * `sites` (list): Fetch all sites for this company.
- * `id` (integer): Company ID.
- * `currency` (string): Currency code.
- * `registers` (list): Fetch all registers for this company.
- * `business_number` (string): ABN, ACN or whatever is applicable as the business number.
- * `shipping_address` (Address): Shipping address.
- * `timezone` (Timezone): Timezone information.
- * `contact_staff_member` (Staff): Contact staff member.
- * `addresses` (list): All addresses attached to this company.
+ * `addresses` - [Address\[\]](#address): All addresses attached to this company.
+ * `business_number` - str: ABN, ACN or whatever is applicable as the business number.
+ * `contact_staff_member` - [Staff](#staff): Contact staff member.
+ * `created_at` - datetime: When the company was created.
+ * `currency` - str: Currency code.
+ * `id` - int: Company ID.
+ * `image` - str: Avatar image.
+ * `name` - str: Company name.
+ * `postal_address` - [Address](#address): Postal address.
+ * `registers` - [Register\[\]](#register): Fetch all registers for this company.
+ * `shipping_address` - [Address](#address): Shipping address.
+ * `sites` - [Site\[\]](#site): Fetch all sites for this company.
+ * `timezone` - [Timezone](#timezone): Timezone information.
+ * `updated_at` - datetime: When the company was last modified.
+ * `website` - str: Website.
 
 ### Customer
 
 Customers are people who buy from the authenticated company.
 
- * `last_name` (str)
- * `image` (str)
- * `first_name` (str)
- * `id` (int)
- * `primary_email_address` (str)
- * `reference_id` (str)
+ * `first_name` - str
+ * `id` - int
+ * `image` - str
+ * `last_name` - str
+ * `primary_email_address` - str
+ * `reference_id` - str
 
 ### Inventory
 
 Inventory indicates the quantity for a given product.
 
- * `stock` (int)
- * `id` (int)
+ * `id` - int
+ * `stock` - int
 
 ### Line
 
 Lines (also called order lines, sale lines or line items) describe the
 products included in an order.
 
- * `modifiers` (list)
- * `product_id` (int)
- * `notes` (str)
- * `number` (int): The line number. This will start with `1`.
- * `unit_price` (float)
- * `price_variation` (float)
- * `quantity` (int)
+ * `modifiers` - int\[\]
+ * `notes` - str
+ * `number` - int: The line number. This will start with `1`.
+ * `price_variation` - float
+ * `product_id` - int
+ * `quantity` - int
+ * `unit_price` - float
 
 ### Location
 
 A geographical location with a latitude and longitude.
 
- * `latitude` (float)
- * `longitude` (float)
+ * `latitude` - float
+ * `longitude` - float
 
 ### Order
 
 Orders are also sometimes called sales or invoices.
 
- * `status` (str)
- * `total_tax` (float)
- * `created_at` (datetime)
- * `updated_at` (datetime)
- * `paid` (float)
- * `id` (int)
- * `total` (float)
+ * `created_at` - datetime
+ * `id` - int
+ * `paid` - float
+ * `status` - str
+ * `total_tax` - float
+ * `total` - float
+ * `updated_at` - datetime
 
 ### Payment
 
 Payments (also called transactions) are financial transactions related to an
 order.
 
- * `amount` (float)
- * `ref` (str)
- * `method_id` (int)
+ * `amount` - float
+ * `method_id` - int
+ * `ref` - str
 
 ### PaymentMethod
 
 Payment methods are assigned to order payments.
 
- * `ledger_code` (str)
- * `name` (str)
- * `id` (int)
+ * `id` - int
+ * `ledger_code` - str
+ * `name` - str
 
 ### Permission
- * `code` (string)
- * `name` (string)
- * `domain` (string)
+ * `code` - str
+ * `domain` - str
+ * `name` - str
 
 ### PriceList
 
@@ -145,102 +145,102 @@ Price lists work by overriding prices in their parent lists (just like
 subclassing in object-oriented programming). The base price list has a
 parent_id of null.
 
- * `parent_id` (int)
- * `name` (str)
- * `id` (int)
+ * `id` - int
+ * `name` - str
+ * `parent_id` - int
 
 ### Product
 
 Products are saleable items in your inventory, including modifier products.
 
- * `code` (str)
- * `description` (str)
- * `barcode` (str)
- * `id` (int)
- * `name` (int)
+ * `barcode` - str
+ * `code` - str
+ * `description` - str
+ * `id` - int
+ * `name` - int
 
 ### Register
 
 Registers are iPads or other computers running Kounta.
 
- * `code` (str)
- * `name` (str)
- * `site_id` (int)
- * `id` (int)
+ * `code` - str
+ * `id` - int
+ * `name` - str
+ * `site_id` - int
 
 ### Shift
 
 Shifts record staff check-ins, check-outs and breaks.
 
- * `site` (Site)
- * `breaks` (list)
- * `staff_member` (kounta.objects.Staff)
+ * `breaks` - [Shift\[\]](#shift)
+ * `site` - [Site](#site)
+ * `staff_member` - [Staff](#staff)
 
 ### ShiftPeriod
 
 Represents a block of time when dealing with `Shift`s.
 
- * `finished_at` (datetime)
- * `started_at` (datetime)
- * `period` (timedelta): The timedelta between the start anf finish time.
+ * `finished_at` - datetime
+ * `period` - timedelta: The timedelta between the start anf finish time.
+ * `started_at` - datetime
 
 ### Site
 
 Sites are physical locations, such as outlets, offices etc, at which one or
 more Kountas will be used.
 
- * `website` (str)
- * `created_at` (datetime)
- * `code` (str)
- * `name` (str)
- * `postal_address` (Address)
- * `phone` (str)
- * `mobile` (str)
- * `image` (str)
- * `price_list` (PriceList)
- * `fax` (str)
- * `id` (int)
- * `updated_at` (datetime)
- * `email` (str)
- * `register_level_reconciliation` (boolean)
- * `business_number` (str)
- * `shipping_address` (Address)
- * `contact_person` (Staff)
- * `location` (Location)
+ * `business_number` - str
+ * `code` - str
+ * `contact_person` - [Staff](#staff)
+ * `created_at` - datetime
+ * `email` - str
+ * `fax` - str
+ * `id` - int
+ * `image` - str
+ * `location` - [Location](#location)
+ * `mobile` - str
+ * `name` - str
+ * `phone` - str
+ * `postal_address` - [Address](#address)
+ * `price_list` - [PriceList](#pricelist)
+ * `register_level_reconciliation` - boolean
+ * `shipping_address` - [Address](#address)
+ * `updated_at` - datetime
+ * `website` - str
 
 ### Staff
 
 Staff members are people who work for the authenticated company.
 
- * `created_at` (str)
- * `last_name` (str)
- * `fax` (str)
- * `postal_address` (Address)
- * `mobile` (str)
- * `image` (str)
- * `first_name` (str)
- * `id` (int)
- * `updated_at` (str)
- * `phone` (str)
- * `primary_email_address` (str)
- * `is_admin` (boolean)
- * `shipping_address` (Address)
- * `email_addresses` (str\[\])
- * `permissions` (Permission\[\])
+ * `created_at` - str
+ * `email_addresses` - str\[\]
+ * `fax` - str
+ * `first_name` - str
+ * `id` - int
+ * `image` - str
+ * `is_admin` - boolean
+ * `last_name` - str
+ * `mobile` - str
+ * `permissions` - [Permission\[\]](#permission)
+ * `phone` - str
+ * `postal_address` - [Address](#address)
+ * `primary_email_address` - str
+ * `shipping_address` - [Address](#address)
+ * `updated_at` - str
 
 ### Tax
 
 Each product can be assigned one or more tax, defined as a code, name, and
 rate.
 
- * `code` (str)
- * `name` (str)
- * `id` (int)
- * `rate` (float)
+ * `code` - str
+ * `id` - int
+ * `name` - str
+ * `rate` - float
 
 ### Timezone
 
 A timezone represents a time offset at a geographical location.
 
- * `name` (string)
- * `offset` (string)
+ * `name` - str
+ * `offset` - str
