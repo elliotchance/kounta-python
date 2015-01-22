@@ -12,15 +12,18 @@ class BaseObject:
     `dict`s.
     """
 
-    def __init__(self, obj, client, parent):
+    def __init__(self, obj, client, company):
         """
-        :type parent: dist
+        :type company: Company|None
         :type client: kounta.client.BasicClient
         :type obj: dict
         """
+
+        assert isinstance(company, Company) or company is None
+
         self.obj = obj
         self._client = client
-        self._parent = parent
+        self._company = company
 
     def __getattr__(self, item):
         """
@@ -48,7 +51,7 @@ class BaseObject:
         """
         address = self.obj[field]
         if address:
-            return Address(address, self._client, self)
+            return Address(address, self._client, self._company)
         return None
 
 
@@ -220,7 +223,8 @@ class Company(BaseObject):
         """
         url = '/v1/companies/%d/registers.json' % self.id
         registers = self._client.get_url(url)
-        return [Register(register, self._client, self) for register in registers]
+        return [Register(register, self._client, self._company) for register in
+                registers]
 
     @property
     def created_at(self):
@@ -369,7 +373,8 @@ class Staff(BaseObject):
         """
         :return: Permission[]
         """
-        return [Permission(p, self._client, self) for p in self.obj['permissions']]
+        return [Permission(p, self._client, self._company) for p in
+                self.obj['permissions']]
 
     @property
     def image(self):
@@ -391,6 +396,18 @@ class Staff(BaseObject):
         :rtype: str
         """
         return parse(self.obj['updated_at'])
+
+    @property
+    def addresses(self):
+        """
+        All addresses attached to this staff member.
+        :return: Address[]
+        """
+        url = '/v1/companies/%d/staff/%d/addresses.json' % \
+              (self._company.id, self.id)
+        addresses = self._client.get_url(url)
+        return [Address(address, self._client, self._company) for address in
+                addresses]
 
 
 class Site(BaseObject):
@@ -425,7 +442,7 @@ class Site(BaseObject):
         """
         :return: Staff
         """
-        return Staff(self.obj['contact_person'], self._client, self)
+        return Staff(self.obj['contact_person'], self._client, self._company)
 
     @property
     def business_number(self):
@@ -481,7 +498,7 @@ class Site(BaseObject):
         """
         :return: Location
         """
-        return Location(self.obj['location'], self._client, self)
+        return Location(self.obj['location'], self._client, self._company)
 
     @property
     def image(self):
@@ -509,7 +526,7 @@ class Site(BaseObject):
         """
         :return: PriceList
         """
-        return PriceList(self.obj['price_list'], self._client, self)
+        return PriceList(self.obj['price_list'], self._client, self._company)
 
     @property
     def created_at(self):
@@ -532,9 +549,10 @@ class Site(BaseObject):
         :return: Address[]
         """
         url = '/v1/companies/%d/sites/%d/addresses.json' % \
-              (self._parent['id'], self.id)
+              (self._company.id, self.id)
         addresses = self._client.get_url(url)
-        return [Address(address, self._client, self) for address in addresses]
+        return [Address(address, self._client, self._company) for address in
+                addresses]
 
 
 class Category(BaseObject):
@@ -978,21 +996,21 @@ class Shift(ShiftPeriod):
         """
         :return: Staff
         """
-        return Staff(self.obj['staff_member'], self._client, self)
+        return Staff(self.obj['staff_member'], self._client, self._company)
 
     @property
     def site(self):
         """
         :return: Site
         """
-        return Site(self.obj['site'], self._client, self)
+        return Site(self.obj['site'], self._client, self._company)
 
     @property
     def breaks(self):
         """
         :return: Shift[]
         """
-        return [Shift(shift, self._client, self) for shift in
+        return [Shift(shift, self._client, self._company) for shift in
                 self.obj['breaks']]
 
 

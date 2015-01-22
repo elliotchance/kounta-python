@@ -10,6 +10,13 @@ class BaseObjectTestCase(TestCase):
     def setUp(self):
         self.client = BasicClient('', '')
 
+    def get_company(self):
+        """
+        :rtype : Company
+        """
+        obj = json.loads(open('test/company.json', 'r').read())
+        return Company(obj, self.client, None)
+
 
 class TestBaseObject(BaseObjectTestCase):
     def test_nonexistent_property(self):
@@ -395,8 +402,7 @@ class TestSite(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/site.json', 'r').read())
-        company = json.loads(open('test/company.json', 'r').read())
-        self.site = Site(obj, self.client, company)
+        self.site = Site(obj, self.client, self.get_company())
 
     def test_id(self):
         self.assertEqual(self.site.id, 923)
@@ -485,7 +491,7 @@ class TestStaff(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/staff.json', 'r').read())
-        self.staff = Staff(obj, self.client, None)
+        self.staff = Staff(obj, self.client, self.get_company())
 
     def test_id(self):
         self.assertEqual(self.staff.id, 389427)
@@ -540,6 +546,14 @@ class TestStaff(BaseObjectTestCase):
     def test_updated_at(self):
         self.assertEqual(self.staff.updated_at,
                          parse('2013-05-22T16:21:40+10:00'))
+
+    def test_addresses_calls_api(self):
+        self.client.get_url = MagicMock(return_value='[]')
+        # noinspection PyStatementEffect
+        self.staff.addresses
+        url = '/v1/companies/5678/staff/389427/addresses.json'
+        # noinspection PyUnresolvedReferences
+        self.client.get_url.assert_called_once_with(url)
 
 
 class TestTax(BaseObjectTestCase):
