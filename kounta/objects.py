@@ -54,6 +54,15 @@ class BaseObject:
             return Address(address, self._client, self._company)
         return None
 
+    def _get_addresses(self, url):
+        """
+        :return: Address[]
+        """
+        url = '/v1/companies/%d/%s' % (self._company.id, url)
+        addresses = self._client.get_url(url)
+        return [Address(address, self._client, self._company) for address in
+                addresses]
+
 
 class Address(BaseObject):
     """
@@ -403,11 +412,7 @@ class Staff(BaseObject):
         All addresses attached to this staff member.
         :return: Address[]
         """
-        url = '/v1/companies/%d/staff/%d/addresses.json' % \
-              (self._company.id, self.id)
-        addresses = self._client.get_url(url)
-        return [Address(address, self._client, self._company) for address in
-                addresses]
+        return self._get_addresses('staff/%d/addresses.json' % self.id)
 
 
 class Site(BaseObject):
@@ -548,11 +553,7 @@ class Site(BaseObject):
         All addresses attached to this site.
         :return: Address[]
         """
-        url = '/v1/companies/%d/sites/%d/addresses.json' % \
-              (self._company.id, self.id)
-        addresses = self._client.get_url(url)
-        return [Address(address, self._client, self._company) for address in
-                addresses]
+        return self._get_addresses('sites/%d/addresses.json' % self.id)
 
 
 class Category(BaseObject):
@@ -703,6 +704,14 @@ class Customer(BaseObject):
         :return: str
         """
         return self.obj['reference_id']
+
+    @property
+    def addresses(self):
+        """
+        All addresses attached to this customer.
+        :return: Address[]
+        """
+        return self._get_addresses('customer/%d/addresses.json' % self.id)
 
 
 class Inventory(BaseObject):
