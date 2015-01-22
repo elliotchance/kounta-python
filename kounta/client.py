@@ -60,7 +60,7 @@ class BasicClient:
         Company object will expose more methods to fetch further endpoints.
         :rtype : Company
         """
-        return Company(self.get_url('/v1/companies/me.json'), self)
+        return Company(self.get_url('/v1/companies/me.json'), self, None)
 
     def reset_cache(self):
         """

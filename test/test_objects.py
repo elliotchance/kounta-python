@@ -14,7 +14,7 @@ class BaseObjectTestCase(TestCase):
 class TestBaseObject(BaseObjectTestCase):
     def test_nonexistent_property(self):
         obj = json.loads('{"foo":"bar"}')
-        address = BaseObject(obj, self.client)
+        address = BaseObject(obj, self.client, None)
         self.assertEqual(address.foo, "bar")
 
 
@@ -22,7 +22,7 @@ class TestAddress(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/address.json', 'r').read())
-        self.address = Address(obj, self.client)
+        self.address = Address(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.address.id, 198109)
@@ -49,7 +49,7 @@ class TestCompany(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/company.json', 'r').read())
-        self.company = Company(obj, self.client)
+        self.company = Company(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.company.id, 5678)
@@ -127,7 +127,7 @@ class TestCategory(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/category.json', 'r').read())
-        self.category = Category(obj, self.client)
+        self.category = Category(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.category.id, 8263)
@@ -146,7 +146,7 @@ class TestProduct(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/product.json', 'r').read())
-        self.product = Product(obj, self.client)
+        self.product = Product(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.product.id, 3928147)
@@ -168,7 +168,7 @@ class TestCheckin(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/checkin.json', 'r').read())
-        self.checkin = Checkin(obj, self.client)
+        self.checkin = Checkin(obj, self.client, None)
 
     def test_customer_id(self):
         self.assertEqual(self.checkin.customer_id, 389427)
@@ -184,7 +184,7 @@ class TestCustomer(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/customer.json', 'r').read())
-        self.customer = Checkin(obj, self.client)
+        self.customer = Checkin(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.customer.id, 389427)
@@ -210,7 +210,7 @@ class TestInventory(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/inventory.json', 'r').read())
-        self.inventory = Inventory(obj, self.client)
+        self.inventory = Inventory(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.inventory.id, 829)
@@ -223,7 +223,7 @@ class TestLine(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/line.json', 'r').read())
-        self.line = Line(obj, self.client)
+        self.line = Line(obj, self.client, None)
 
     def test_number(self):
         self.assertEqual(self.line.number, 1)
@@ -251,7 +251,7 @@ class TestOrder(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/order.json', 'r').read())
-        self.order = Order(obj, self.client)
+        self.order = Order(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.order.id, 912387093)
@@ -281,7 +281,7 @@ class TestPaymentMethod(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/payment_method.json', 'r').read())
-        self.payment_method = PaymentMethod(obj, self.client)
+        self.payment_method = PaymentMethod(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.payment_method.id, 1)
@@ -297,7 +297,7 @@ class TestPayment(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/payment.json', 'r').read())
-        self.payment = Payment(obj, self.client)
+        self.payment = Payment(obj, self.client, None)
 
     def test_method_id(self):
         self.assertEqual(self.payment.method_id, 12)
@@ -313,7 +313,7 @@ class TestPriceList(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/price_list.json', 'r').read())
-        self.price_list = PriceList(obj, self.client)
+        self.price_list = PriceList(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.price_list.id, 201)
@@ -329,7 +329,7 @@ class TestRegister(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/register.json', 'r').read())
-        self.register = Register(obj, self.client)
+        self.register = Register(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.register.id, 9091)
@@ -348,7 +348,7 @@ class TestShiftPeriod(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/shift_period.json', 'r').read())
-        self.shift_period = ShiftPeriod(obj, self.client)
+        self.shift_period = ShiftPeriod(obj, self.client, None)
 
     def test_started_at(self):
         self.assertEqual(self.shift_period.started_at,
@@ -367,7 +367,7 @@ class TestShift(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/shift.json', 'r').read())
-        self.shift = Shift(obj, self.client)
+        self.shift = Shift(obj, self.client, None)
 
     def test_staff_member(self):
         self.assertTrue(isinstance(self.shift.staff_member, Staff))
@@ -395,7 +395,8 @@ class TestSite(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/site.json', 'r').read())
-        self.site = Site(obj, self.client)
+        company = json.loads(open('test/company.json', 'r').read())
+        self.site = Site(obj, self.client, company)
 
     def test_id(self):
         self.assertEqual(self.site.id, 923)
@@ -458,12 +459,20 @@ class TestSite(BaseObjectTestCase):
         self.assertEqual(self.site.updated_at,
                          parse('2013-05-22T16:21:40+10:00'))
 
+    def test_addresses_calls_api(self):
+        self.client.get_url = MagicMock(return_value='[]')
+        # noinspection PyStatementEffect
+        self.site.addresses
+        url = '/v1/companies/5678/sites/923/addresses.json'
+        # noinspection PyUnresolvedReferences
+        self.client.get_url.assert_called_once_with(url)
+
 
 class TestLocation(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/location.json', 'r').read())
-        self.location = Location(obj, self.client)
+        self.location = Location(obj, self.client, None)
 
     def test_latitude(self):
         self.assertEqual(self.location.latitude, 23.7861)
@@ -476,7 +485,7 @@ class TestStaff(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/staff.json', 'r').read())
-        self.staff = Staff(obj, self.client)
+        self.staff = Staff(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.staff.id, 389427)
@@ -537,7 +546,7 @@ class TestTax(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/tax.json', 'r').read())
-        self.tax = Tax(obj, self.client)
+        self.tax = Tax(obj, self.client, None)
 
     def test_id(self):
         self.assertEqual(self.tax.id, 829)

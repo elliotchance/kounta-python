@@ -2,6 +2,9 @@ from dateutil.parser import parse
 import json
 
 
+sentinel = object()
+
+
 class BaseObject:
     """
     Used as the parent for all objects returned from the API. It main purpose is
@@ -9,13 +12,15 @@ class BaseObject:
     `dict`s.
     """
 
-    def __init__(self, obj, client):
+    def __init__(self, obj, client, parent):
         """
+        :type parent: dist
         :type client: kounta.client.BasicClient
         :type obj: dict
         """
         self.obj = obj
         self._client = client
+        self._parent = parent
 
     def __getattr__(self, item):
         """
@@ -43,7 +48,7 @@ class BaseObject:
         """
         address = self.obj[field]
         if address:
-            return Address(address, self._client)
+            return Address(address, self._client, self)
         return None
 
 
@@ -148,7 +153,7 @@ class Company(BaseObject):
         """
         url = '/v1/companies/%d/addresses.json' % self.id
         addresses = self._client.get_url(url)
-        return [Address(address, self._client) for address in addresses]
+        return [Address(address, self._client, self) for address in addresses]
 
     @property
     def business_number(self):
@@ -164,7 +169,7 @@ class Company(BaseObject):
         Contact staff member.
         :return: Staff
         """
-        return Staff(self.obj['contact_staff_member'], self._client)
+        return Staff(self.obj['contact_staff_member'], self._client, self)
 
     @property
     def image(self):
@@ -196,7 +201,7 @@ class Company(BaseObject):
         Timezone information.
         :return: Timezone
         """
-        return Timezone(self.obj['timezone'], self._client)
+        return Timezone(self.obj['timezone'], self._client, self)
 
     @property
     def sites(self):
@@ -205,7 +210,7 @@ class Company(BaseObject):
         :return: Site[]
         """
         sites = self._client.get_url('/v1/companies/%d/sites.json' % self.id)
-        return [Site(site, self._client) for site in sites]
+        return [Site(site, self._client, self) for site in sites]
 
     @property
     def registers(self):
@@ -215,7 +220,7 @@ class Company(BaseObject):
         """
         url = '/v1/companies/%d/registers.json' % self.id
         registers = self._client.get_url(url)
-        return [Register(register, self._client) for register in registers]
+        return [Register(register, self._client, self) for register in registers]
 
     @property
     def created_at(self):
@@ -364,7 +369,7 @@ class Staff(BaseObject):
         """
         :return: Permission[]
         """
-        return [Permission(p, self._client) for p in self.obj['permissions']]
+        return [Permission(p, self._client, self) for p in self.obj['permissions']]
 
     @property
     def image(self):
@@ -420,7 +425,7 @@ class Site(BaseObject):
         """
         :return: Staff
         """
-        return Staff(self.obj['contact_person'], self._client)
+        return Staff(self.obj['contact_person'], self._client, self)
 
     @property
     def business_number(self):
@@ -476,7 +481,7 @@ class Site(BaseObject):
         """
         :return: Location
         """
-        return Location(self.obj['location'], self._client)
+        return Location(self.obj['location'], self._client, self)
 
     @property
     def image(self):
@@ -504,7 +509,7 @@ class Site(BaseObject):
         """
         :return: PriceList
         """
-        return PriceList(self.obj['price_list'], self._client)
+        return PriceList(self.obj['price_list'], self._client, self)
 
     @property
     def created_at(self):
@@ -519,6 +524,17 @@ class Site(BaseObject):
         :return: datetime
         """
         return parse(self.obj['updated_at'])
+
+    @property
+    def addresses(self):
+        """
+        All addresses attached to this site.
+        :return: Address[]
+        """
+        url = '/v1/companies/%d/sites/%d/addresses.json' % \
+              (self._parent['id'], self.id)
+        addresses = self._client.get_url(url)
+        return [Address(address, self._client, self) for address in addresses]
 
 
 class Category(BaseObject):
@@ -962,21 +978,22 @@ class Shift(ShiftPeriod):
         """
         :return: Staff
         """
-        return Staff(self.obj['staff_member'], self._client)
+        return Staff(self.obj['staff_member'], self._client, self)
 
     @property
     def site(self):
         """
         :return: Site
         """
-        return Site(self.obj['site'], self._client)
+        return Site(self.obj['site'], self._client, self)
 
     @property
     def breaks(self):
         """
         :return: Shift[]
         """
-        return [Shift(shift, self._client) for shift in self.obj['breaks']]
+        return [Shift(shift, self._client, self) for shift in
+                self.obj['breaks']]
 
 
 class Location(BaseObject):
