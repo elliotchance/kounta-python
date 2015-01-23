@@ -1076,3 +1076,30 @@ class Tax(BaseObject):
         :return: float
         """
         return self.obj['rate']
+
+
+class IncomeAccountAmount(BaseObject):
+    """
+    An amount for a given tax type.
+    """
+
+    @property
+    def tax_id(self):
+        """
+        :return: int
+        """
+        return self.obj['tax_id']
+
+    @property
+    def net(self):
+        """
+        :return: float
+        """
+        return self.obj['net']
+
+    @property
+    def tax(self):
+        """
+        :return: float
+        """
+        return self.obj['tax']

@@ -581,3 +581,19 @@ class TestTax(BaseObjectTestCase):
 
     def test_rate(self):
         self.assertEqual(self.tax.rate, 0.1)
+
+
+class TestIncomeAccountAmount(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/income_account_amount.json', 'r').read())
+        self.income_account_amount = IncomeAccountAmount(obj, self.client, None)
+
+    def test_tax_id(self):
+        self.assertEqual(self.income_account_amount.tax_id, 829)
+
+    def test_net(self):
+        self.assertEqual(self.income_account_amount.net, 45.45)
+
+    def test_tax(self):
+        self.assertEqual(self.income_account_amount.tax, 4.54)
