@@ -623,3 +623,19 @@ class TestAdjustments(BaseObjectTestCase):
 
     def test_cash_out(self):
         self.assertEqual(self.adjustments.cash_out, 75.4)
+
+
+class TestIncomeAccount(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/income_account.json', 'r').read())
+        self.income_account = IncomeAccount(obj, self.client, None)
+
+    def test_ledger_code(self):
+        self.assertEqual(self.income_account.ledger_code, '200')
+
+    def test_amounts(self):
+        amounts = self.income_account.amounts
+        self.assertEqual(len(amounts), 2)
+        self.assertTrue(isinstance(amounts[0], IncomeAccountAmount))
+        self.assertEqual(amounts[0].tax_id, 829)

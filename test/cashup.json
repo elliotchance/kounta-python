@@ -1,0 +1,71 @@
+{
+  "id": 19762,
+  "number": 27,
+  "processed": false,
+  "register_level_reconciliation": true,
+  "register": {
+    "id": 9091,
+    "code": "T1",
+    "name": "Terminal 1"
+  },
+  "site": {
+    "id": 985,
+    "name": "Downtown",
+    "code": "DT"
+  },
+  "staff_member": {
+    "id": 389427,
+    "first_name": "Jamie",
+    "last_name": "McDonald"
+  },
+  "income_accounts": [
+    {
+      "ledger_code": "200",
+      "amounts": [
+        {
+          "tax_id": 829,
+          "net": 45.45,
+          "tax": 4.54
+        },
+        {
+          "tax_id": 844,
+          "net": 0,
+          "tax": 0
+        }
+      ]
+    }
+  ],
+  "reconciliations": [
+    {
+      "payment_method": {
+        "id": 1,
+        "name": "Cash",
+        "ledger_code": "200"
+      },
+      "takings": {
+        "recorded": 1424.65,
+        "counted": 1415.8
+      },
+      "adjustments": {
+        "cash_in": 20,
+        "cash_out": 75.4
+      }
+    },
+    {
+      "payment_method": {
+        "id": 2,
+        "name": "Credit Card",
+        "ledger_code": "601"
+      },
+      "takings": {
+        "recorded": 2380.2,
+        "counted": 2380.2
+      },
+      "adjustments": {
+        "cash_in": 0,
+        "cash_out": 0
+      }
+    }
+  ],
+  "created_at": "2013-04-29T20:08:21+11:00"
+}

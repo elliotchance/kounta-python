@@ -1143,3 +1143,79 @@ class Adjustments(BaseObject):
         :return: float
         """
         return self.obj['cash_out']
+
+
+class IncomeAccount(BaseObject):
+    """
+    Income account.
+    """
+
+    @property
+    def ledger_code(self):
+        """
+        :return: string
+        """
+        return self.obj['ledger_code']
+
+    @property
+    def amounts(self):
+        """
+        :return: IncomeAccountAmount[]
+        """
+        return [IncomeAccountAmount(amount, self._client, self._company)
+                for amount in self.obj['amounts']]
+
+
+class Cashup(BaseObject):
+    """
+    Cash-ups are end-of-day cash reconcilliations.
+    """
+
+    @property
+    def id(self):
+        """
+        :return: int
+        """
+        return self.obj['id']
+
+    @property
+    def number(self):
+        """
+        :return: int
+        """
+        return self.obj['number']
+
+    @property
+    def processed(self):
+        """
+        :return: boolean
+        """
+        return self.obj['processed']
+
+    @property
+    def register_level_reconciliation(self):
+        """
+        :return: boolean
+        """
+        return self.obj['register_level_reconciliation']
+
+    @property
+    def register(self):
+        """
+        :return: Register
+        """
+        return Register(self.obj['register'], self._client, self._company)
+
+    @property
+    def site(self):
+        """
+        :return: Site
+        """
+        return Site(self.obj['site'], self._client, self._company)
+
+    @property
+    def staff_member(self):
+        """
+        :return: Staff
+        """
+        return Staff(self.obj['staff_member'], self._client, self._company)
