@@ -6,9 +6,18 @@ import json
 import os
 
 class TestBasicClient(TestCase):
+    def get_config(self):
+        try:
+            return json.load(open("config.json", 'r'))['basic']
+        except IOError as e:
+            return {
+                "client_id": os.environ.get('basic_client_id'),
+                "client_secret": os.environ.get('basic_client_secret'),
+            }
+
     def setUp(self):
         TestCase.setUp(self)
-        config = json.load(open("config.json", 'r'))['basic']
+        config = self.get_config()
         self.client = BasicClient(
             client_id = config['client_id'],
             client_secret = config['client_secret']

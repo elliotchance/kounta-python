@@ -1,11 +1,13 @@
 language: python
 python:
-  - 2.6
-  - 2.7
-  - 3.2
-  - 3.3
-  - 3.4
-
+- 2.6
+- 2.7
+- 3.2
+- 3.3
+- 3.4
 install: pip install -r requirements.txt
-
 script: nosetests
+env:
+  global:
+  - secure: D8V2KanF8E8xw5WoqqcEoYlrnoJQWpay/0wuj8qlhDQJ3U2LVHR5GkfQhjYgmQWXEl9KHtMOaZ7P/MLUzwx/uBykhiiXdFBNuAOaMU3sknSlQhg4fx+4kmq/CWdNLpITXqkt8O1q5AU9r8/C9enPOP5yD+Kzrw0LVNB0NyKFCXw=
+  - secure: irJDOZh4CJTYeF7SoG66iq110q+DSAqtWughQpLhf5GxgUugZRvEntyoFuYo+ejFaeozES7lCxTm3ghveqwq/VpfhrNtGEcs7rAYM4Q1WK6e2jwp3yMVv80fQcC2U+Yi/8QM9CfOUbN/pUaG1aby/MB0AlDiYqHwuh5D4L+n36E=
