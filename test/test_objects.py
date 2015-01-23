@@ -639,3 +639,25 @@ class TestIncomeAccount(BaseObjectTestCase):
         self.assertEqual(len(amounts), 2)
         self.assertTrue(isinstance(amounts[0], IncomeAccountAmount))
         self.assertEqual(amounts[0].tax_id, 829)
+
+
+class TestReconciliation(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/reconciliation.json', 'r').read())
+        self.reconciliation = Reconciliation(obj, self.client, None)
+
+    def test_payment_method(self):
+        payment_method = self.reconciliation.payment_method
+        self.assertTrue(isinstance(payment_method, PaymentMethod))
+        self.assertEqual(payment_method.id, 1)
+
+    def test_takings(self):
+        takings = self.reconciliation.takings
+        self.assertTrue(isinstance(takings, Takings))
+        self.assertEqual(takings.recorded, 1424.65)
+
+    def test_adjustments(self):
+        adjustments = self.reconciliation.adjustments
+        self.assertTrue(isinstance(adjustments, Adjustments))
+        self.assertEqual(adjustments.cash_in, 20)

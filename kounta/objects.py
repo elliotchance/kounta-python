@@ -1166,6 +1166,34 @@ class IncomeAccount(BaseObject):
                 for amount in self.obj['amounts']]
 
 
+class Reconciliation(BaseObject):
+    """
+    End-of-day reconciliation.
+    """
+
+    @property
+    def payment_method(self):
+        """
+        :return: PaymentMethod
+        """
+        return PaymentMethod(self.obj['payment_method'], self._client,
+                             self._company)
+
+    @property
+    def takings(self):
+        """
+        :return: Takings
+        """
+        return Takings(self.obj['takings'], self._client, self._company)
+
+    @property
+    def adjustments(self):
+        """
+        :return: Adjustments
+        """
+        return Adjustments(self.obj['adjustments'], self._client, self._company)
+
+
 class Cashup(BaseObject):
     """
     Cash-ups are end-of-day cash reconcilliations.
@@ -1219,3 +1247,11 @@ class Cashup(BaseObject):
         :return: Staff
         """
         return Staff(self.obj['staff_member'], self._client, self._company)
+
+    @property
+    def income_accounts(self):
+        """
+        :return: IncomeAccount[]
+        """
+        return [IncomeAccount(account, self._client, self._company) for account
+                in self.obj['income_accounts']]
