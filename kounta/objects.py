@@ -1123,3 +1123,23 @@ class Takings(BaseObject):
         :return: float
         """
         return self.obj['counted']
+
+
+class Adjustments(BaseObject):
+    """
+    Adjustments to a reconciliation.
+    """
+
+    @property
+    def cash_in(self):
+        """
+        :return: float
+        """
+        return self.obj['cash_in']
+
+    @property
+    def cash_out(self):
+        """
+        :return: float
+        """
+        return self.obj['cash_out']

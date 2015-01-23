@@ -610,3 +610,16 @@ class TestTakings(BaseObjectTestCase):
 
     def test_counted(self):
         self.assertEqual(self.takings.counted, 1415.8)
+
+
+class TestAdjustments(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/adjustments.json', 'r').read())
+        self.adjustments = Adjustments(obj, self.client, None)
+
+    def test_cash_in(self):
+        self.assertEqual(self.adjustments.cash_in, 20)
+
+    def test_cash_out(self):
+        self.assertEqual(self.adjustments.cash_out, 75.4)
