@@ -597,3 +597,16 @@ class TestIncomeAccountAmount(BaseObjectTestCase):
 
     def test_tax(self):
         self.assertEqual(self.income_account_amount.tax, 4.54)
+
+
+class TestTakings(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/takings.json', 'r').read())
+        self.takings = Takings(obj, self.client, None)
+
+    def test_recorded(self):
+        self.assertEqual(self.takings.recorded, 1424.65)
+
+    def test_counted(self):
+        self.assertEqual(self.takings.counted, 1415.8)

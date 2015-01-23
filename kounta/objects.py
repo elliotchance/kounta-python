@@ -1103,3 +1103,23 @@ class IncomeAccountAmount(BaseObject):
         :return: float
         """
         return self.obj['tax']
+
+
+class Takings(BaseObject):
+    """
+    Daily takings.
+    """
+
+    @property
+    def recorded(self):
+        """
+        :return: float
+        """
+        return self.obj['recorded']
+
+    @property
+    def counted(self):
+        """
+        :return: float
+        """
+        return self.obj['counted']
