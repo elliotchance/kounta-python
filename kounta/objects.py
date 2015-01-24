@@ -64,6 +64,16 @@ class BaseObject:
         return [Address(address, self._client, self._company) for address in
                 addresses]
 
+    def _get_cashups(self, url, **kwargs):
+        """
+        :return: Cashup[]
+        """
+        generator = CashupUrlGenerator()
+        url = '%s/%s' % (url, generator.get_url(**kwargs))
+        cashups = self._client.get_url(url)
+        return [Cashup(cashup, self._client, self._company) for cashup
+                in cashups]
+
 
 class Address(BaseObject):
     """
@@ -257,10 +267,7 @@ class Company(BaseObject):
         Fetch cashups for a company. Refer to documentation for Cashups for more
         information.
         """
-        generator = CashupUrlGenerator()
-        url = '/v1/companies/%d/%s' % (self.id, generator.get_url(**kwargs))
-        cashups = self._client.get_url(url)
-        return [Cashup(cashup, self._client, self) for cashup in cashups]
+        return self._get_cashups('/v1/companies/%d' % self.id, **kwargs)
 
 
 class Permission(BaseObject):
@@ -565,6 +572,14 @@ class Site(BaseObject):
         :return: Address[]
         """
         return self._get_addresses('sites/%d/addresses.json' % self.id)
+
+    def cashups(self, **kwargs):
+        """
+        Fetch cashups for a register. Refer to documentation for Cashups for
+        more information.
+        """
+        url = '/v1/companies/%d/sites/%d' % (self._company.id, self.id)
+        return self._get_cashups(url, **kwargs)
 
 
 class Category(BaseObject):
@@ -982,11 +997,8 @@ class Register(BaseObject):
         Fetch cashups for a register. Refer to documentation for Cashups for
         more information.
         """
-        generator = CashupUrlGenerator()
-        url = '/v1/companies/%d/registers/%d/%s' % (self._company.id, self.id, generator.get_url(**kwargs))
-        cashups = self._client.get_url(url)
-        return [Cashup(cashup, self._client, self._company) for cashup
-                in cashups]
+        url = '/v1/companies/%d/registers/%d' % (self._company.id, self.id)
+        return self._get_cashups(url, **kwargs)
 
 
 class ShiftPeriod(BaseObject):
