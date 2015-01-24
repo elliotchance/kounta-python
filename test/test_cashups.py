@@ -26,3 +26,8 @@ class TestCashupUrlGenerator(TestCase):
         generator = CashupUrlGenerator()
         self.assertEqual(generator.get_url(at=parse('2013-04-28')),
                          'cashups/2013-04-28.json')
+
+    def test_since(self):
+        generator = CashupUrlGenerator()
+        self.assertEqual(generator.get_url(since='2013-04-29'),
+                         'cashups/since/2013-04-29.json')
