@@ -44,3 +44,9 @@ class TestCashupUrlGenerator(TestCase):
     def test_at_invalid_type(self):
         generator = CashupUrlGenerator()
         self.assertRaises(ValueError, generator.get_url, **{'at': {}})
+
+    def test_unprocessed_since(self):
+        generator = CashupUrlGenerator()
+        self.assertEqual(generator.get_url(unprocessed=True,
+                                           since='2013-04-29'),
+                         'cashups/unprocessed/since/2013-04-29.json')

@@ -10,10 +10,15 @@ class CashupUrlGenerator:
         return str(the_date)[:10]
 
     def get_url(self, **kwargs):
-        if 'since' in kwargs.keys():
-            return 'cashups/since/%s.json' % self._date_string(kwargs['since'])
-        if 'at' in kwargs.keys():
-            return 'cashups/%s.json' % self._date_string(kwargs['at'])
+        url = 'cashups'
+
         if 'unprocessed' in kwargs.keys() and kwargs['unprocessed']:
-            return 'cashups/unprocessed.json'
-        return 'cashups.json'
+            url += '/unprocessed'
+
+        if 'since' in kwargs.keys():
+            url += '/since/%s' % self._date_string(kwargs['since'])
+
+        if 'at' in kwargs.keys():
+            url += '/' + self._date_string(kwargs['at'])
+
+        return url + '.json'
