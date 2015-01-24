@@ -10,3 +10,8 @@ class TestCashupUrlGenerator(TestCase):
         generator = CashupUrlGenerator()
         self.assertEqual(generator.get_url(unprocessed=True),
                          'cashups/unprocessed.json')
+
+    def test_unprocessed_false(self):
+        generator = CashupUrlGenerator()
+        self.assertEqual(generator.get_url(unprocessed=False),
+                         'cashups.json')
