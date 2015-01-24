@@ -36,3 +36,7 @@ class TestCashupUrlGenerator(TestCase):
         generator = CashupUrlGenerator()
         self.assertEqual(generator.get_url(since=parse('2013-04-28')),
                          'cashups/since/2013-04-28.json')
+
+    def test_at_invalid_string(self):
+        generator = CashupUrlGenerator()
+        self.assertRaises(ValueError, generator.get_url, **{'at': 'foo'})

@@ -1,6 +1,11 @@
+from dateutil.parser import parse
+from datetime import date
+
 class CashupUrlGenerator:
-    def _date_string(self, date):
-        return str(date)[:10]
+    def _date_string(self, the_date):
+        if not isinstance(the_date, date):
+            the_date = parse(the_date)
+        return str(the_date)[:10]
 
     def get_url(self, **kwargs):
         if 'since' in kwargs.keys():
