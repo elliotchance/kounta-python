@@ -359,8 +359,9 @@ class TestPriceList(BaseObjectTestCase):
 class TestRegister(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
+        company = self.get_company()
         obj = json.loads(open('test/register.json', 'r').read())
-        self.register = Register(obj, self.client, None)
+        self.register = Register(obj, self.client, company)
 
     def test_id(self):
         self.assertEqual(self.register.id, 9091)
@@ -373,6 +374,15 @@ class TestRegister(BaseObjectTestCase):
 
     def test_site_id(self):
         self.assertEqual(self.register.site_id, 985)
+
+    def test_cashups_calls_api(self):
+        self.client.get_url = MagicMock(return_value='[]')
+        # noinspection PyStatementEffect
+        self.register.cashups(unprocessed = True, since = '2013-04-29')
+        url = '/v1/companies/5678/registers/9091/' + \
+              'cashups/unprocessed/since/2013-04-29.json'
+        # noinspection PyUnresolvedReferences
+        self.client.get_url.assert_called_once_with(url)
 
 
 class TestShiftPeriod(BaseObjectTestCase):

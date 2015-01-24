@@ -254,10 +254,8 @@ class Company(BaseObject):
 
     def cashups(self, **kwargs):
         """
-        This is a special method for fetching cashups for a company. This method
-        can be used with no arguments, but there are optional arguments;
-        `unprocessed` (boolean), `at` (date or string) and `since` (date and
-        string).
+        Fetch cashups for a company. Refer to documentation for Cashups for more
+        information.
         """
         generator = CashupUrlGenerator()
         url = '/v1/companies/%d/%s' % (self.id, generator.get_url(**kwargs))
@@ -978,6 +976,17 @@ class Register(BaseObject):
         :return: int
         """
         return self.obj['site_id']
+
+    def cashups(self, **kwargs):
+        """
+        Fetch cashups for a register. Refer to documentation for Cashups for
+        more information.
+        """
+        generator = CashupUrlGenerator()
+        url = '/v1/companies/%d/registers/%d/%s' % (self._company.id, self.id, generator.get_url(**kwargs))
+        cashups = self._client.get_url(url)
+        return [Cashup(cashup, self._client, self._company) for cashup
+                in cashups]
 
 
 class ShiftPeriod(BaseObject):
