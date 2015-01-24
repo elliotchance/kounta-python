@@ -12,6 +12,9 @@ class CashupUrlGenerator:
     def get_url(self, **kwargs):
         url = 'cashups'
 
+        if 'since' in kwargs.keys() and 'at' in kwargs.keys():
+            raise RuntimeError("cannot use 'at' and 'since' at the same time.")
+
         if 'unprocessed' in kwargs.keys() and kwargs['unprocessed']:
             url += '/unprocessed'
 

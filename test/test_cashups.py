@@ -50,3 +50,10 @@ class TestCashupUrlGenerator(TestCase):
         self.assertEqual(generator.get_url(unprocessed=True,
                                            since='2013-04-29'),
                          'cashups/unprocessed/since/2013-04-29.json')
+
+    def test_error_if_at_and_since(self):
+        generator = CashupUrlGenerator()
+        self.assertRaises(RuntimeError, generator.get_url, **{
+            'at': '2013-04-28',
+            'since': '2013-04-28'
+        })
