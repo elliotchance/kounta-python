@@ -251,6 +251,15 @@ class Company(BaseObject):
         """
         return parse(self.obj['updated_at'])
 
+    def cashups(self, **kwargs):
+        """
+        This is a special method for fetching cashups for a company.
+        :return: Cashup[]
+        """
+        url = '/v1/companies/%d/cashups.json' % self.id
+        cashups = self._client.get_url(url)
+        return [Cashup(cashup, self._client, self) for cashup in cashups]
+
 
 class Permission(BaseObject):
     @property

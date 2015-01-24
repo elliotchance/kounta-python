@@ -129,6 +129,14 @@ class TestCompany(BaseObjectTestCase):
         # noinspection PyUnresolvedReferences
         self.client.get_url.assert_called_once_with(url)
 
+    def test_cashups_calls_api(self):
+        self.client.get_url = MagicMock(return_value='[]')
+        # noinspection PyStatementEffect
+        self.company.cashups()
+        url = '/v1/companies/5678/cashups.json'
+        # noinspection PyUnresolvedReferences
+        self.client.get_url.assert_called_once_with(url)
+
 
 class TestCategory(BaseObjectTestCase):
     def setUp(self):

@@ -9,7 +9,7 @@ class TestBasicClient(TestCase):
     def get_config(self):
         try:
             return json.load(open("config.json", 'r'))['basic']
-        except IOError as e:
+        except IOError:
             return {
                 "client_id": os.environ.get('basic_client_id'),
                 "client_secret": os.environ.get('basic_client_secret'),
