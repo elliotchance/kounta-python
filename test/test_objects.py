@@ -661,3 +661,53 @@ class TestReconciliation(BaseObjectTestCase):
         adjustments = self.reconciliation.adjustments
         self.assertTrue(isinstance(adjustments, Adjustments))
         self.assertEqual(adjustments.cash_in, 20)
+
+
+class TestCashup(BaseObjectTestCase):
+    def setUp(self):
+        BaseObjectTestCase.setUp(self)
+        obj = json.loads(open('test/cashup.json', 'r').read())
+        self.cashup = Cashup(obj, self.client, None)
+
+    def test_id(self):
+        self.assertEqual(self.cashup.id, 19762)
+
+    def test_(self):
+        self.assertEqual(self.cashup.number, 27)
+
+    def test_processed(self):
+        self.assertEqual(self.cashup.processed, False)
+
+    def test_register_level_reconciliation(self):
+        self.assertEqual(self.cashup.register_level_reconciliation, True)
+
+    def test_register(self):
+        register = self.cashup.register
+        self.assertTrue(isinstance(register, Register))
+        self.assertEqual(register.id, 9091)
+
+    def test_site(self):
+        site = self.cashup.site
+        self.assertTrue(isinstance(site, Site))
+        self.assertEqual(site.id, 985)
+
+    def test_staff_member(self):
+        staff_member = self.cashup.staff_member
+        self.assertTrue(isinstance(staff_member, Staff))
+        self.assertEqual(staff_member.id, 389427)
+
+    def test_income_accounts(self):
+        income_accounts = self.cashup.income_accounts
+        self.assertEqual(len(income_accounts), 1)
+        self.assertTrue(isinstance(income_accounts[0], IncomeAccount))
+        self.assertEqual(income_accounts[0].ledger_code, '200')
+
+    def test_reconciliations(self):
+        reconciliations = self.cashup.reconciliations
+        self.assertEqual(len(reconciliations), 2)
+        self.assertTrue(isinstance(reconciliations[0], Reconciliation))
+        self.assertEqual(reconciliations[0].payment_method.id, 1)
+
+    def test_created_at(self):
+        self.assertEqual(self.cashup.created_at,
+                         parse('2013-04-29T20:08:21+11:00'))

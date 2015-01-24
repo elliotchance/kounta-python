@@ -1255,3 +1255,18 @@ class Cashup(BaseObject):
         """
         return [IncomeAccount(account, self._client, self._company) for account
                 in self.obj['income_accounts']]
+
+    @property
+    def reconciliations(self):
+        """
+        :return: Reconciliation[]
+        """
+        return [Reconciliation(account, self._client, self._company) for account
+                in self.obj['reconciliations']]
+
+    @property
+    def created_at(self):
+        """
+        :return: datetime
+        """
+        return parse(self.obj['created_at'])
