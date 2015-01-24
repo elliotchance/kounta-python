@@ -40,3 +40,7 @@ class TestCashupUrlGenerator(TestCase):
     def test_at_invalid_string(self):
         generator = CashupUrlGenerator()
         self.assertRaises(ValueError, generator.get_url, **{'at': 'foo'})
+
+    def test_at_invalid_type(self):
+        generator = CashupUrlGenerator()
+        self.assertRaises(ValueError, generator.get_url, **{'at': {}})
