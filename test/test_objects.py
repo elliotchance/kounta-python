@@ -542,6 +542,14 @@ class TestSite(BaseObjectTestCase):
         # noinspection PyUnresolvedReferences
         self.client.get_url.assert_called_once_with(url)
 
+    def test_checkins_calls_api(self):
+        self.client.get_url = MagicMock(return_value='[]')
+        # noinspection PyStatementEffect
+        self.site.checkins
+        url = '/v1/companies/5678/sites/923/checkins.json'
+        # noinspection PyUnresolvedReferences
+        self.client.get_url.assert_called_once_with(url)
+
 
 class TestLocation(BaseObjectTestCase):
     def setUp(self):

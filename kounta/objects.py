@@ -603,6 +603,17 @@ class Site(BaseObject):
                                                             self.id)
         return self._get_categories(url)
 
+    @property
+    def checkins(self):
+        """
+        All checkins for this site.
+        :rtype : object
+        """
+        url = '/v1/companies/%d/sites/%d/checkins.json' % (self._company.id, self.id)
+        checkins = self._client.get_url(url)
+        return [Checkin(checkin, self._client, self._company) for checkin in
+                checkins]
+
 
 class Category(BaseObject):
     """
