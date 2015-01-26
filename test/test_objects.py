@@ -177,7 +177,7 @@ class TestProduct(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
         obj = json.loads(open('test/product.json', 'r').read())
-        self.product = Product(obj, self.client, None)
+        self.product = Product(obj, self.client, self.get_company())
 
     def test_id(self):
         self.assertEqual(self.product.id, 3928147)
@@ -194,6 +194,14 @@ class TestProduct(BaseObjectTestCase):
 
     def test_barcode(self):
         self.assertEqual(self.product.barcode, '1234567890')
+
+    def test_categories_calls_api(self):
+        self.client.get_url = MagicMock(return_value='[]')
+        # noinspection PyStatementEffect
+        self.product.categories
+        url = '/v1/companies/5678/products/3928147/categories.json'
+        # noinspection PyUnresolvedReferences
+        self.client.get_url.assert_called_once_with(url)
 
 
 class TestCheckin(BaseObjectTestCase):

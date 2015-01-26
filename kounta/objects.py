@@ -678,6 +678,15 @@ class Product(BaseObject):
         """
         return self.obj['barcode']
 
+    @property
+    def categories(self):
+        """
+        All categories for this product.
+        """
+        url = '/v1/companies/%d/products/%d/categories.json' % \
+              (self._company.id, self.id)
+        return self._get_categories(url)
+
 
 class Checkin(BaseObject):
     """
