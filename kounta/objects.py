@@ -279,7 +279,7 @@ class Company(BaseObject):
         """
         All categories for this company.
         """
-        url = '/v1/companies/%d/categories.json' % (self.id)
+        url = '/v1/companies/%d/categories.json' % self.id
         return self._get_categories(url)
 
 
@@ -593,6 +593,15 @@ class Site(BaseObject):
         """
         url = '/v1/companies/%d/sites/%d' % (self._company.id, self.id)
         return self._get_cashups(url, **kwargs)
+
+    @property
+    def categories(self):
+        """
+        All categories for this site.
+        """
+        url = '/v1/companies/%d/sites/%d/categories.json' % (self._company.id,
+                                                            self.id)
+        return self._get_categories(url)
 
 
 class Category(BaseObject):
