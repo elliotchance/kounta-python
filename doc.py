@@ -41,7 +41,7 @@ def render_properties(obj):
         if property_name[0] == '_':
             continue
         desc = get_description(property.__doc__)
-        p.append(' * `%s` - %s%s%s' % (
+        p.append(' * `%s` (%s)%s%s' % (
             property_name,
             nice_return_type(property),
             ': ' if desc else '',

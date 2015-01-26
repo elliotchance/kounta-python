@@ -1,6 +1,13 @@
 from dateutil.parser import parse
-from kounta.cashup import CashupUrlGenerator
+import os
 import json
+
+"""
+We must prevent CashupUrlGenerator from being imported when we only want to
+generated documentation of the classes in this file.
+"""
+if not os.environ.get('DOC'):
+    from kounta.cashup import CashupUrlGenerator
 
 
 class BaseObject:
@@ -271,6 +278,7 @@ class Company(BaseObject):
         """
         Fetch cashups for a company. Refer to documentation for Cashups for more
         information.
+        :rtype : Cashup[]
         """
         return self._get_cashups('/v1/companies/%d' % self.id, **kwargs)
 
@@ -278,6 +286,7 @@ class Company(BaseObject):
     def categories(self):
         """
         All categories for this company.
+        :rtype : Category[]
         """
         url = '/v1/companies/%d/categories.json' % self.id
         return self._get_categories(url)
@@ -590,6 +599,7 @@ class Site(BaseObject):
         """
         Fetch cashups for a register. Refer to documentation for Cashups for
         more information.
+        :rtype : Cashup[]
         """
         url = '/v1/companies/%d/sites/%d' % (self._company.id, self.id)
         return self._get_cashups(url, **kwargs)
@@ -598,6 +608,7 @@ class Site(BaseObject):
     def categories(self):
         """
         All categories for this site.
+        :rtype : Category[]
         """
         url = '/v1/companies/%d/sites/%d/categories.json' % (self._company.id,
                                                             self.id)
@@ -607,7 +618,7 @@ class Site(BaseObject):
     def checkins(self):
         """
         All checkins for this site.
-        :rtype : object
+        :rtype : Checkin[]
         """
         url = '/v1/companies/%d/sites/%d/checkins.json' % (self._company.id, self.id)
         checkins = self._client.get_url(url)
@@ -693,6 +704,7 @@ class Product(BaseObject):
     def categories(self):
         """
         All categories for this product.
+        :rtype : Category[]
         """
         url = '/v1/companies/%d/products/%d/categories.json' % \
               (self._company.id, self.id)
@@ -1038,6 +1050,7 @@ class Register(BaseObject):
         """
         Fetch cashups for a register. Refer to documentation for Cashups for
         more information.
+        :rtype : Cashup[]
         """
         url = '/v1/companies/%d/registers/%d' % (self._company.id, self.id)
         return self._get_cashups(url, **kwargs)
