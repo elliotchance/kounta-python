@@ -3,9 +3,6 @@ from kounta.cashup import CashupUrlGenerator
 import json
 
 
-sentinel = object()
-
-
 class BaseObject:
     """
     Used as the parent for all objects returned from the API. It main purpose is
@@ -73,6 +70,14 @@ class BaseObject:
         cashups = self._client.get_url(url)
         return [Cashup(cashup, self._client, self._company) for cashup
                 in cashups]
+
+    def _get_categories(self, url):
+        """
+        :return: Category[]
+        """
+        categories = self._client.get_url(url)
+        return [Category(category, self._client, self._company) for category in
+                categories]
 
 
 class Address(BaseObject):
@@ -268,6 +273,14 @@ class Company(BaseObject):
         information.
         """
         return self._get_cashups('/v1/companies/%d' % self.id, **kwargs)
+
+    @property
+    def categories(self):
+        """
+        All categories for this company.
+        """
+        url = '/v1/companies/%d/categories.json' % (self.id)
+        return self._get_categories(url)
 
 
 class Permission(BaseObject):

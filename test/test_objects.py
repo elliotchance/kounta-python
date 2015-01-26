@@ -55,8 +55,7 @@ class TestAddress(BaseObjectTestCase):
 class TestCompany(BaseObjectTestCase):
     def setUp(self):
         BaseObjectTestCase.setUp(self)
-        obj = json.loads(open('test/company.json', 'r').read())
-        self.company = Company(obj, self.client, None)
+        self.company = self.get_company()
 
     def test_id(self):
         self.assertEqual(self.company.id, 5678)
@@ -145,6 +144,14 @@ class TestCompany(BaseObjectTestCase):
         # noinspection PyUnresolvedReferences
         self.client.get_url.assert_called_once_with(url)
 
+    def test_categories_calls_api(self):
+        self.client.get_url = MagicMock(return_value='[]')
+        # noinspection PyStatementEffect
+        self.company.categories
+        url = '/v1/companies/5678/categories.json'
+        # noinspection PyUnresolvedReferences
+        self.client.get_url.assert_called_once_with(url)
+
 
 class TestCategory(BaseObjectTestCase):
     def setUp(self):
@@ -159,7 +166,8 @@ class TestCategory(BaseObjectTestCase):
         self.assertEqual(self.category.name, "Fruit & Vegetables")
 
     def test_description(self):
-        self.assertEqual(self.category.description, "Fresh fruit and veg from local and imported sources")
+        self.assertEqual(self.category.description,
+                         "Fresh fruit and veg from local and imported sources")
 
     def test_image(self):
         self.assertEqual(self.category.image, None)
@@ -178,7 +186,8 @@ class TestProduct(BaseObjectTestCase):
         self.assertEqual(self.product.name, "Egg Carton")
 
     def test_description(self):
-        self.assertEqual(self.product.description, "12 \"Free Range\" Eggs in a carton.")
+        self.assertEqual(self.product.description,
+                         "12 \"Free Range\" Eggs in a carton.")
 
     def test_code(self):
         self.assertEqual(self.product.code, 'egg298')
@@ -197,7 +206,8 @@ class TestCheckin(BaseObjectTestCase):
         self.assertEqual(self.checkin.customer_id, 389427)
 
     def test_start_time(self):
-        self.assertEqual(self.checkin.start_time, parse("2014-05-21T17:23:52+10:00"))
+        self.assertEqual(self.checkin.start_time,
+                         parse("2014-05-21T17:23:52+10:00"))
 
     def test_duration(self):
         self.assertEqual(self.checkin.duration, 120)
@@ -219,7 +229,8 @@ class TestCustomer(BaseObjectTestCase):
         self.assertEqual(self.customer.last_name, 'McDonald')
 
     def test_primary_email_address(self):
-        self.assertEqual(self.customer.primary_email_address, 'jamie@kounta.kom')
+        self.assertEqual(self.customer.primary_email_address,
+                         'jamie@kounta.kom')
 
     def test_image(self):
         image = 'http://www.gravatar.com/avatar/c.jpg'
