@@ -2,7 +2,7 @@ from distutils.core import setup, find_packages
 setup(
     name='kounta',
     version='1.0',
-    packages = find_packages()
+    packages = find_packages(),
     author='Elliot Chance',
     author_email='elliotchance@gmail.com',
     license='MIT',
